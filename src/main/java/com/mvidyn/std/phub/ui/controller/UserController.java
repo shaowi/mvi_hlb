@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.mvidyn.std.phub.ui.model.User;
 import com.mvidyn.std.phub.ui.service.UserService;
+import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -20,20 +21,24 @@ public class UserController {
 	private UserService userService;
 
 	@PostMapping("/login")
-	public String login() {
-		return "login";
+	public @ResponseBody String login(@RequestBody User user, HttpSession session) {
+		// @ResponseBody means the returned String is the response, not a view name
+		User dbUser = userService.getUser(user);
+		if (dbUser != null) {
+			session.setAttribute("user", dbUser.getId());
+			return String.format("Welcome %d. %s!", dbUser.getId(), user.getName());
+		}
+		return "User not found";
 	}
 
 	@PostMapping("/logout")
-	public String loginPost() {
-		return "loginPost";
+	public String logout(HttpSession session) {
+		session.removeAttribute("user");
+		return "Logout";
 	}
 
 	@PostMapping("/signup")
 	public @ResponseBody String addNewUser(@RequestBody User user) {
-		// @ResponseBody means the returned String is the response, not a view name
-		// @RequestParam means it is a parameter from the GET or POST request
-
 		userService.saveUser(user);
 		return "Saved";
 	}
@@ -41,6 +46,16 @@ public class UserController {
 	@GetMapping(path = "/all")
 	public @ResponseBody List<User> getAllUsers() {
 		return userService.getAllUsers();
+	}
+
+	@GetMapping(path = "/current")
+	public String getCurrentUser(HttpSession session) {
+		Object userId = session.getAttribute("user");
+		if (userId != null) {
+			User user = userService.getUserById((int) userId);
+			return user.toString();
+		}
+		return "";
 	}
 
 }

@@ -40,4 +40,10 @@ public class User {
 		this.password = password;
 	}
 
+	@Override
+	public String toString() {
+		return String.format(
+				"User[id=%d, name='%s', password='%s']",
+				id, name, password);
+	}
 }

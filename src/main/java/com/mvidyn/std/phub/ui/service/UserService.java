@@ -21,4 +21,18 @@ public class UserService {
 		return userRepository.findAll();
 	}
 
+	public User getUser(User u1) {
+		return this.getAllUsers().stream()
+				.filter(u2 -> u1.getName().equals(u2.getName()) && u1.getPassword().equals(u2.getPassword()))
+				.findFirst()
+				.orElse(null);
+	}
+
+	public User getUserById(int id) {
+		return this.getAllUsers().stream()
+				.filter(user -> user.getId() == id)
+				.findFirst()
+				.orElse(null);
+	}
+
 }
