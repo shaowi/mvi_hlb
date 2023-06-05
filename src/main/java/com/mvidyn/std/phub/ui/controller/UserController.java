@@ -6,6 +6,8 @@ import com.mvidyn.std.phub.ui.model.User;
 import com.mvidyn.std.phub.ui.service.UserService;
 import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -21,26 +23,25 @@ public class UserController {
 	private UserService userService;
 
 	@PostMapping("/login")
-	public @ResponseBody String login(@RequestBody User user, HttpSession session) {
+	public ResponseEntity<User> login(@RequestBody User user, HttpSession session) {
 		// @ResponseBody means the returned String is the response, not a view name
 		User dbUser = userService.getUser(user);
 		if (dbUser != null) {
 			session.setAttribute("user", dbUser.getId());
-			return String.format("Welcome %d. %s!", dbUser.getId(), user.getName());
+			return new ResponseEntity<>(dbUser, HttpStatus.OK);
 		}
-		return "User not found";
+		return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
 	}
 
 	@PostMapping("/logout")
-	public String logout(HttpSession session) {
+	public ResponseEntity<User> logout(HttpSession session) {
 		session.removeAttribute("user");
-		return "Logout";
+		return new ResponseEntity<>(HttpStatus.OK);
 	}
 
 	@PostMapping("/signup")
-	public @ResponseBody String addNewUser(@RequestBody User user) {
-		userService.saveUser(user);
-		return "Saved";
+	public ResponseEntity<User> addNewUser(@RequestBody User user) {
+		return new ResponseEntity<>(userService.saveUser(user), HttpStatus.CREATED);
 	}
 
 	@GetMapping(path = "/all")
