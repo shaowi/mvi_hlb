@@ -18,6 +18,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
+import org.springframework.mock.web.MockHttpSession;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
@@ -27,6 +28,8 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 @AutoConfigureMockMvc(addFilters = false)
 @ExtendWith(MockitoExtension.class)
 public class UserControllerTests {
+
+	private static final String BASE = "/user";
 
 	@Autowired
 	private MockMvc mockMvc;
@@ -56,7 +59,7 @@ public class UserControllerTests {
 	public void SignupUser_ReturnCreated() throws Exception {
 		// Arrange
 		given(userService.saveUser(ArgumentMatchers.any())).willAnswer((invocation) -> invocation.getArgument(0));
-		String endpoint = "/user/signup";
+		String endpoint = BASE + "/signup";
 
 		// Act
 		ResultActions response = mockMvc.perform(MockMvcRequestBuilders.post(endpoint)
@@ -73,7 +76,7 @@ public class UserControllerTests {
 	public void LoginExistingUser_ReturnOk() throws Exception {
 		// Arrange
 		when(userService.getUser(user)).thenReturn(user);
-		String endpoint = "/user/login";
+		String endpoint = BASE + "/login";
 
 		// Act
 		ResultActions response =
@@ -92,7 +95,7 @@ public class UserControllerTests {
 		// Arrange
 		User newUser = User.builder().name("newName").password("newPw").build();
 		when(userService.getUser(newUser)).thenReturn(null);
-		String endpoint = "/user/login";
+		String endpoint = BASE + "/login";
 
 		// Act
 		ResultActions response = mockMvc.perform(MockMvcRequestBuilders.post(endpoint)
@@ -106,7 +109,7 @@ public class UserControllerTests {
 	@Test
 	public void LogoutUser_ReturnOk() throws Exception {
 		// Arrange
-		String endpoint = "/user/logout";
+		String endpoint = BASE + "/logout";
 
 		// Act
 		ResultActions response = mockMvc.perform(MockMvcRequestBuilders.post(endpoint));
@@ -114,4 +117,47 @@ public class UserControllerTests {
 		// Assert
 		response.andExpect(MockMvcResultMatchers.status().isOk());
 	}
+
+	@Test
+	public void GetAllUser_ReturnsOk() throws Exception {
+		// Arrange
+		String endpoint = BASE + "/all";
+
+		// Act
+		ResultActions response = mockMvc.perform(MockMvcRequestBuilders.get(endpoint));
+
+		// Assert
+		response.andExpect(MockMvcResultMatchers.status().isOk());
+	}
+
+	@Test
+	public void GetCurrentUser_ReturnsUser() throws Exception {
+		// Arrange
+		String endpoint = BASE + "/current";
+		MockHttpSession session = new MockHttpSession();
+
+		// Sign up user and set session
+		userService.saveUser(user);
+		session.setAttribute("user", user.getId());
+
+		// Act
+		ResultActions response = mockMvc.perform(MockMvcRequestBuilders.get(endpoint).session(session));
+
+		// Assert
+		response.andExpect(MockMvcResultMatchers.status().isOk());
+	}
+
+	@Test
+	public void GetCurrentUser_ReturnsNotFound() throws Exception {
+		// Arrange
+		String endpoint = BASE + "/current";
+		MockHttpSession session = new MockHttpSession();
+
+		// Act
+		ResultActions response = mockMvc.perform(MockMvcRequestBuilders.get(endpoint).session(session));
+
+		// Assert
+		response.andExpect(MockMvcResultMatchers.status().isNotFound());
+	}
+
 }
