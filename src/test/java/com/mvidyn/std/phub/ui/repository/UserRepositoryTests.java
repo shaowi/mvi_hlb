@@ -19,8 +19,7 @@ public class UserRepositoryTests {
 	private UserRepository userRepository;
 
 	@Test
-	public void UserRepository_Save_ReturnSavedUser() {
-
+	public void Save_ReturnSavedUser() {
 		// Arrange
 		User user = User.builder()
 				.name("name")
@@ -31,5 +30,26 @@ public class UserRepositoryTests {
 
 		// Assert
 		Assertions.assertThat(savedUser).isNotNull();
+		Assertions.assertThat(savedUser.getId()).isGreaterThan(0);
+	}
+
+	@Test
+	public void FindAll_ReturnUsers() {
+		// Arrange
+		User user = User.builder()
+				.name("name")
+				.password("pw").build();
+		User user2 = User.builder()
+				.name("name2")
+				.password("pw2").build();
+		userRepository.save(user);
+		userRepository.save(user2);
+
+		// Act
+		Iterable<User> foundUsers = userRepository.findAll();
+
+		// Assert
+		Assertions.assertThat(foundUsers).isNotNull();
+		Assertions.assertThat(foundUsers).hasSize(2);
 	}
 }

@@ -45,8 +45,11 @@ public class UserControllerTests {
 	}
 
 	@Test
-	public void shouldCreateMockMvc() {
+	public void shouldCreateAttributes() {
 		assertNotNull(mockMvc);
+		assertNotNull(userService);
+		assertNotNull(objectMapper);
+		assertNotNull(user);
 	}
 
 	@Test
@@ -98,5 +101,17 @@ public class UserControllerTests {
 
 		// Assert
 		response.andExpect(MockMvcResultMatchers.status().isUnauthorized());
+	}
+
+	@Test
+	public void LogoutUser_ReturnOk() throws Exception {
+		// Arrange
+		String endpoint = "/user/logout";
+
+		// Act
+		ResultActions response = mockMvc.perform(MockMvcRequestBuilders.post(endpoint));
+
+		// Assert
+		response.andExpect(MockMvcResultMatchers.status().isOk());
 	}
 }

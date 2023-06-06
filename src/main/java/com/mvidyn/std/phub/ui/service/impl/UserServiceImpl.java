@@ -26,7 +26,8 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public User getUser(User u1) {
-		return this.getAllUsers().stream()
+		List<User> users = this.getAllUsers();
+		return users.stream()
 				.filter(u2 -> u1.getName().equals(u2.getName()) && u1.getPassword().equals(u2.getPassword()))
 				.findFirst()
 				.orElse(null);
@@ -34,7 +35,8 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public User getUserById(int id) {
-		return this.getAllUsers().stream()
+		List<User> users = this.getAllUsers();
+		return users.stream()
 				.filter(user -> user.getId() == id)
 				.findFirst()
 				.orElse(null);

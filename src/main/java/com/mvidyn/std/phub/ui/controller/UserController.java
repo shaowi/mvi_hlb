@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -24,7 +23,6 @@ public class UserController {
 
 	@PostMapping("/login")
 	public ResponseEntity<User> login(@RequestBody User user, HttpSession session) {
-		// @ResponseBody means the returned String is the response, not a view name
 		User dbUser = userService.getUser(user);
 		if (dbUser != null) {
 			session.setAttribute("user", dbUser.getId());
@@ -45,18 +43,18 @@ public class UserController {
 	}
 
 	@GetMapping(path = "/all")
-	public @ResponseBody List<User> getAllUsers() {
-		return userService.getAllUsers();
+	public ResponseEntity<List<User>> getAllUsers() {
+		return new ResponseEntity<>(userService.getAllUsers(), HttpStatus.OK);
 	}
 
 	@GetMapping(path = "/current")
-	public String getCurrentUser(HttpSession session) {
+	public ResponseEntity<User> getCurrentUser(HttpSession session) {
 		Object userId = session.getAttribute("user");
 		if (userId != null) {
 			User user = userService.getUserById((int) userId);
-			return user.toString();
+			return new ResponseEntity<>(user, HttpStatus.OK);
 		}
-		return "";
+		return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 	}
 
 }
