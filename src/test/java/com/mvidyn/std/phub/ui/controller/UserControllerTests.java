@@ -5,6 +5,9 @@ import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.when;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.mvidyn.std.phub.ui.exception.Message;
+import com.mvidyn.std.phub.ui.model.Access;
+import com.mvidyn.std.phub.ui.model.Role;
 import com.mvidyn.std.phub.ui.model.User;
 import com.mvidyn.std.phub.ui.service.UserService;
 import org.hamcrest.CoreMatchers;
@@ -44,7 +47,12 @@ public class UserControllerTests {
 
 	@BeforeEach
 	public void setup() {
-		user = User.builder().name("name").password("pw").build();
+		user = User.builder()
+				.name("maker")
+				.password("pw")
+				.access(Access.ADMIN)
+				.role(Role.MAKER)
+				.build();
 	}
 
 	@Test
@@ -70,6 +78,67 @@ public class UserControllerTests {
 		response.andExpect(MockMvcResultMatchers.status().isCreated())
 				.andExpect(MockMvcResultMatchers.jsonPath("$.name", CoreMatchers.is(user.getName())))
 				.andExpect(MockMvcResultMatchers.jsonPath("$.password", CoreMatchers.is(user.getPassword())));
+	}
+
+	@Test
+	public void SignupNullUser_ReturnBadRequest() throws Exception {
+		// Arrange
+		String endpoint = BASE + "/signup";
+		when(userService.saveUser(null)).thenThrow(new IllegalArgumentException(Message.INVALID_USER));
+
+		// Act
+		ResultActions response = mockMvc.perform(MockMvcRequestBuilders.post(endpoint)
+				.contentType(MediaType.APPLICATION_JSON)
+				.content(objectMapper.writeValueAsString(null)));
+
+		// Assert
+		response.andExpect(MockMvcResultMatchers.status().isBadRequest());
+	}
+
+	@Test
+	public void SignupInvalidUser_ReturnBadRequest() throws Exception {
+		// Arrange
+		String endpoint = BASE + "/signup";
+
+		// User has no name
+		User user = User.builder()
+				.password("pw")
+				.access(Access.ADMIN)
+				.role(Role.MAKER)
+				.build();
+
+		when(userService.saveUser(user)).thenThrow(new IllegalArgumentException(Message.INVALID_USER));
+
+		// Act
+		ResultActions response = mockMvc.perform(MockMvcRequestBuilders.post(endpoint)
+				.contentType(MediaType.APPLICATION_JSON)
+				.content(objectMapper.writeValueAsString(user)));
+
+		// Assert
+		response.andExpect(MockMvcResultMatchers.status().isBadRequest());
+	}
+
+	@Test
+	public void SignupDuplicatedUser_ReturnBadRequest() throws Exception {
+		// Arrange
+		User user2 = User.builder()
+				.name("maker")
+				.password("pw")
+				.access(Access.ADMIN)
+				.role(Role.MAKER)
+				.build();
+		given(userService.saveUser(user)).willReturn(user);
+		when(userService.saveUser(user2)).thenThrow(new IllegalArgumentException(Message.DUPLICATED_USER));
+
+		String endpoint = BASE + "/signup";
+
+		// Act
+		ResultActions response = mockMvc.perform(MockMvcRequestBuilders.post(endpoint)
+				.contentType(MediaType.APPLICATION_JSON)
+				.content(objectMapper.writeValueAsString(user2)));
+
+		// Assert
+		response.andExpect(MockMvcResultMatchers.status().isBadRequest());
 	}
 
 	@Test

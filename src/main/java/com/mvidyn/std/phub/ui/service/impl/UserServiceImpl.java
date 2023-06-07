@@ -2,6 +2,7 @@ package com.mvidyn.std.phub.ui.service.impl;
 
 import java.util.List;
 
+import com.mvidyn.std.phub.ui.exception.Message;
 import com.mvidyn.std.phub.ui.model.User;
 import com.mvidyn.std.phub.ui.repository.UserRepository;
 import com.mvidyn.std.phub.ui.service.UserService;
@@ -17,10 +18,10 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public User saveUser(User user) {
 		if (isInvalidUser(user)) {
-			throw new IllegalArgumentException("User is null");
+			throw new IllegalArgumentException(Message.INVALID_USER);
 		}
 		if (isUserExists(user)) {
-			throw new IllegalArgumentException("User already exists");
+			throw new IllegalArgumentException(Message.DUPLICATED_USER);
 		}
 		return userRepository.save(user);
 	}
@@ -49,7 +50,9 @@ public class UserServiceImpl implements UserService {
 	}
 
 	private boolean isInvalidUser(User user) {
-		return user == null || user.getName() == null;
+		return user == null || user.getName() == null
+				|| user.getPassword() == null || user.getRole() == null
+				|| user.getAccess() == null;
 	}
 
 	private boolean isUserExists(User user) {
