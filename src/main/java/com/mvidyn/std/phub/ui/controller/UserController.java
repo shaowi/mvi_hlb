@@ -30,20 +30,24 @@ public class UserController {
 		User dbUser = userService.getUser(user);
 		if (dbUser != null) {
 			session.setAttribute("user", dbUser.getId());
+			LOGGER.info("User " + dbUser.getName() + " logged in");
 			return new ResponseEntity<>(dbUser, HttpStatus.OK);
 		}
+		LOGGER.error("User failed to login");
 		return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
 	}
 
 	@PostMapping("/logout")
 	public ResponseEntity<User> logout(HttpSession session) {
 		session.removeAttribute("user");
+		LOGGER.info("User logged out");
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
 
 	@PostMapping("/signup")
 	public ResponseEntity<User> addNewUser(@RequestBody User user) {
 		try {
+			LOGGER.info("User " + user.getName() + " signed up");
 			return new ResponseEntity<>(userService.saveUser(user), HttpStatus.CREATED);
 		} catch (IllegalArgumentException e) {
 			LOGGER.error(e.getMessage());
@@ -53,6 +57,7 @@ public class UserController {
 
 	@GetMapping(path = "/all")
 	public ResponseEntity<List<User>> getAllUsers() {
+		LOGGER.info("Get all users");
 		return new ResponseEntity<>(userService.getAllUsers(), HttpStatus.OK);
 	}
 
@@ -61,8 +66,10 @@ public class UserController {
 		Object userId = session.getAttribute("user");
 		if (userId != null) {
 			User user = userService.getUserById((int) userId);
+			LOGGER.info("Get current user " + user.getName());
 			return new ResponseEntity<>(user, HttpStatus.OK);
 		}
+		LOGGER.info("No user logged in");
 		return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 	}
 
