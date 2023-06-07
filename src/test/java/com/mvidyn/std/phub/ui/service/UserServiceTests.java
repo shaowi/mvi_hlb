@@ -1,15 +1,19 @@
 package com.mvidyn.std.phub.ui.service;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.when;
 
 import java.util.Arrays;
 import java.util.List;
 
+import com.mvidyn.std.phub.ui.model.Access;
+import com.mvidyn.std.phub.ui.model.Role;
 import com.mvidyn.std.phub.ui.model.User;
 import com.mvidyn.std.phub.ui.repository.UserRepository;
 import com.mvidyn.std.phub.ui.service.impl.UserServiceImpl;
 import org.assertj.core.api.Assertions;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -27,34 +31,60 @@ public class UserServiceTests {
 	@InjectMocks
 	private UserServiceImpl userService;
 
+	private User userA;
+	private User userB;
+
+	@BeforeEach
+	public void setup() {
+		userA = User.builder()
+				.id(0)
+				.name("maker")
+				.password("pw")
+				.access(Access.ADMIN)
+				.role(Role.MAKER)
+				.build();
+		userB = User.builder()
+				.id(1)
+				.name("checker")
+				.password("pw")
+				.access(Access.ADMIN)
+				.role(Role.CHECKER)
+				.build();
+	}
+
 	@Test
 	public void SaveUser_ReturnUser() {
 		// Arrange
-		User user = User.builder()
-				.name("name")
-				.password("pw").build();
-
-		when(userRepository.save(user)).thenReturn(user);
+		when(userRepository.save(userA)).thenReturn(userA);
 
 		// Act
-		User savedUser = userService.saveUser(user);
+		User savedUser = userService.saveUser(userA);
 
 		// Assert
 		Assertions.assertThat(savedUser).isNotNull();
 	}
 
 	@Test
+	public void SaveNullUser_ThrowIllegalArgException() {
+		assertThrows(IllegalArgumentException.class, () -> userService.saveUser(null));
+	}
+
+	@Test
+	public void SaveInvalidUser_ThrowIllegalArgException() {
+		User invalidUser = User.builder()
+				.password("pw")
+				.access(Access.ADMIN)
+				.role(Role.MAKER)
+				.build();
+
+		// Assert
+		assertThrows(IllegalArgumentException.class, () -> userService.saveUser(invalidUser));
+	}
+
+	@Test
 	public void GetAllUsers_ReturnUsers() {
 		// Arrange
-		User user = User.builder()
-				.name("name")
-				.password("pw").build();
-		User user2 = User.builder()
-				.name("name2")
-				.password("pw2").build();
-		userRepository.save(user);
-		userRepository.save(user2);
-		when(userRepository.findAll()).thenReturn(Arrays.asList(user, user2));
+		when(userRepository.findAll()).thenReturn(Arrays.asList(userA, userB));
 
 		// Act
 		List<User> foundUsers = userService.getAllUsers();
@@ -67,44 +97,29 @@ public class UserServiceTests {
 	@Test
 	public void GetUser_ReturnUser() {
 		// Arrange
-		User user = User.builder()
-				.name("name")
-				.password("pw").build();
-		User user2 = User.builder()
-				.name("name2")
-				.password("pw2").build();
-		userRepository.save(user);
-		userRepository.save(user2);
-		when(userRepository.findAll()).thenReturn(Arrays.asList(user, user2));
+		userRepository.save(userA);
+		userRepository.save(userB);
+		when(userRepository.findAll()).thenReturn(Arrays.asList(userA, userB));
 
 		// Act
-		User foundUser = userService.getUser(user);
+		User foundUser = userService.getUser(userA);
 
 		// Assert
 		Assertions.assertThat(foundUser).isNotNull();
-		Assertions.assertThat(foundUser).isEqualTo(user);
+		Assertions.assertThat(foundUser).isEqualTo(userA);
 	}
 
 	@Test
 	public void GetUserById_ReturnUser() {
-		// Arrange
-		User user = User.builder()
-				.id(0)
-				.name("name")
-				.password("pw").build();
-		User user2 = User.builder()
-				.id(1)
-				.name("name2")
-				.password("pw2").build();
-		userRepository.save(user);
-		userRepository.save(user2);
-		when(userRepository.findAll()).thenReturn(Arrays.asList(user, user2));
+		userRepository.save(userA);
+		userRepository.save(userB);
+		when(userRepository.findAll()).thenReturn(Arrays.asList(userA, userB));
 
 		// Act
-		User foundUser = userService.getUserById(user2.getId());
+		User foundUser = userService.getUserById(userB.getId());
 
 		// Assert
 		Assertions.assertThat(foundUser).isNotNull();
-		Assertions.assertThat(foundUser).isEqualTo(user2);
+		Assertions.assertThat(foundUser).isEqualTo(userB);
 	}
 }

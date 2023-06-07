@@ -50,9 +50,9 @@ public class UserServiceImpl implements UserService {
 	}
 
 	private boolean isInvalidUser(User user) {
-		return user == null || user.getName() == null
-				|| user.getPassword() == null || user.getRole() == null
-				|| user.getAccess() == null;
+		return user == null || user.getId() == -1
+				|| user.getName() == null || user.getPassword() == null
+				|| user.getRole() == null || user.getAccess() == null;
 	}
 
 	private boolean isUserExists(User user) {
