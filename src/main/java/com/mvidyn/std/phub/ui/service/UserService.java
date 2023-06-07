@@ -5,6 +5,7 @@ import java.util.List;
 import com.mvidyn.std.phub.ui.model.User;
 
 public interface UserService {
+
 	public User saveUser(User user);
 
 	public List<User> getAllUsers();

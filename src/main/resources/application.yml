@@ -1,0 +1,16 @@
+spring:
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true # To log sql queries
+  datasource:
+    url: jdbc:mysql://localhost:3306/hlb # To use database named "hlb" in MySQL
+    username: root
+    password:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  session:
+    store-type: jdbc # To use Spring Session JDBC for maintaining session state
+    jdbc:
+      initialize-schema: always
+      timeout:
+        seconds: 900
