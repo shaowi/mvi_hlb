@@ -16,6 +16,12 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public User saveUser(User user) {
+		if (isInvalidUser(user)) {
+			throw new IllegalArgumentException("User is null");
+		}
+		if (isUserExists(user)) {
+			throw new IllegalArgumentException("User already exists");
+		}
 		return userRepository.save(user);
 	}
 
@@ -40,6 +46,16 @@ public class UserServiceImpl implements UserService {
 				.filter(user -> user.getId() == id)
 				.findFirst()
 				.orElse(null);
+	}
+
+	private boolean isInvalidUser(User user) {
+		return user == null || user.getName() == null;
+	}
+
+	private boolean isUserExists(User user) {
+		List<User> users = this.getAllUsers();
+		return users.stream()
+				.anyMatch(u -> u.getName().equals(user.getName()));
 	}
 
 }

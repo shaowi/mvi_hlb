@@ -5,6 +5,8 @@ import java.util.List;
 import com.mvidyn.std.phub.ui.model.User;
 import com.mvidyn.std.phub.ui.service.UserService;
 import javax.servlet.http.HttpSession;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,6 +22,8 @@ public class UserController {
 
 	@Autowired
 	private UserService userService;
+
+	private static final Logger LOGGER = LoggerFactory.getLogger(UserController.class);
 
 	@PostMapping("/login")
 	public ResponseEntity<User> login(@RequestBody User user, HttpSession session) {
@@ -39,7 +43,12 @@ public class UserController {
 
 	@PostMapping("/signup")
 	public ResponseEntity<User> addNewUser(@RequestBody User user) {
-		return new ResponseEntity<>(userService.saveUser(user), HttpStatus.CREATED);
+		try {
+			return new ResponseEntity<>(userService.saveUser(user), HttpStatus.CREATED);
+		} catch (IllegalArgumentException e) {
+			LOGGER.error(e.getMessage());
+			return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+		}
 	}
 
 	@GetMapping(path = "/all")
