@@ -2,6 +2,7 @@ package com.mvidyn.std.phub.ui.service;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.when;
+import static org.mockito.BDDMockito.given;
 
 import java.util.Arrays;
 import java.util.List;
@@ -71,14 +72,16 @@ public class UserServiceTests {
 
 	@Test
 	public void SaveInvalidUser_ThrowIllegalArgException() {
-		User invalidUser = User.builder()
-				.password("pw")
-				.access(Access.ADMIN)
-				.role(Role.MAKER)
-				.build();
-
-		// Assert
+		User invalidUser = userA.toBuilder().name(null).build();
 		assertThrows(IllegalArgumentException.class, () -> userService.saveUser(invalidUser));
+	}
+
+	@Test
+	public void SaveDuplicatedUser_ThrowIllegalArgException() {
+		User userACopy = userA.toBuilder().build();
+		given(userRepository.save(userA)).willReturn(userA);
+		given(userRepository.save(userACopy)).willThrow(IllegalArgumentException.class);
+		assertThrows(IllegalArgumentException.class, () -> userService.saveUser(userACopy));
 	}
 
 	@Test
