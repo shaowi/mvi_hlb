@@ -64,7 +64,7 @@ public class UserControllerTests {
 	}
 
 	@Test
-	public void SignupUser_ReturnCreated() throws Exception {
+	public void signupUser_ReturnCreated() throws Exception {
 		// Arrange
 		given(userService.saveUser(ArgumentMatchers.any())).willAnswer((invocation) -> invocation.getArgument(0));
 		String endpoint = BASE + "/signup";
@@ -81,7 +81,7 @@ public class UserControllerTests {
 	}
 
 	@Test
-	public void SignupNullUser_ReturnBadRequest() throws Exception {
+	public void signupNullUser_ReturnBadRequest() throws Exception {
 		// Arrange
 		String endpoint = BASE + "/signup";
 		when(userService.saveUser(null)).thenThrow(new IllegalArgumentException(Message.INVALID_USER));
@@ -96,7 +96,7 @@ public class UserControllerTests {
 	}
 
 	@Test
-	public void SignupInvalidUser_ReturnBadRequest() throws Exception {
+	public void signupInvalidUser_ReturnBadRequest() throws Exception {
 		// Arrange
 		String endpoint = BASE + "/signup";
 
@@ -119,7 +119,7 @@ public class UserControllerTests {
 	}
 
 	@Test
-	public void SignupDuplicatedUser_ReturnBadRequest() throws Exception {
+	public void signupDuplicatedUser_ReturnBadRequest() throws Exception {
 		// Arrange
 		User user2 = User.builder()
 				.name("maker")
@@ -142,7 +142,7 @@ public class UserControllerTests {
 	}
 
 	@Test
-	public void LoginExistingUser_ReturnOk() throws Exception {
+	public void loginExistingUser_ReturnOk() throws Exception {
 		// Arrange
 		when(userService.getUser(user)).thenReturn(user);
 		String endpoint = BASE + "/login";
@@ -160,7 +160,7 @@ public class UserControllerTests {
 	}
 
 	@Test
-	public void LoginNonExistingUser_ReturnUnauthorised() throws Exception {
+	public void loginNonExistingUser_ReturnUnauthorised() throws Exception {
 		// Arrange
 		User newUser = User.builder().name("newName").password("newPw").build();
 		when(userService.getUser(newUser)).thenReturn(null);
@@ -176,7 +176,7 @@ public class UserControllerTests {
 	}
 
 	@Test
-	public void LogoutUser_ReturnOk() throws Exception {
+	public void logoutUser_ReturnOk() throws Exception {
 		// Arrange
 		String endpoint = BASE + "/logout";
 
@@ -188,7 +188,7 @@ public class UserControllerTests {
 	}
 
 	@Test
-	public void GetAllUser_ReturnsOk() throws Exception {
+	public void getAllUser_ReturnsOk() throws Exception {
 		// Arrange
 		String endpoint = BASE + "/all";
 
@@ -200,7 +200,7 @@ public class UserControllerTests {
 	}
 
 	@Test
-	public void GetCurrentUser_ReturnsUser() throws Exception {
+	public void getCurrentUser_ReturnsUser() throws Exception {
 		// Arrange
 		String endpoint = BASE + "/current";
 		MockHttpSession session = new MockHttpSession();
@@ -217,7 +217,7 @@ public class UserControllerTests {
 	}
 
 	@Test
-	public void GetCurrentUser_ReturnsNotFound() throws Exception {
+	public void getCurrentUser_ReturnsNotFound() throws Exception {
 		// Arrange
 		String endpoint = BASE + "/current";
 		MockHttpSession session = new MockHttpSession();
