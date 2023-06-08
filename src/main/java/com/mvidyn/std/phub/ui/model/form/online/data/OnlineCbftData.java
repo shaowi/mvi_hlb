@@ -11,26 +11,27 @@ public class OnlineCbftData extends OnlineData {
 	private ForeignPaymentForm foreignPaymentForm;
 
 	// Charges details
-	private float creditMidRate;
-	private float debitMidRate;
+	private double creditMidRate;
+	private double debitMidRate;
 	private String chargeBearer;
-	private float commissionExchange;
-	private float commissionHandle;
-	private float cableCharge;
-	private float totalFee;
-	private float netPayment;
-	private float netRemittance;
+	private double commissionExchange;
+	private double commissionHandle;
+	private double cableCharge;
+	private double totalFee;
+	private double netPayment;
+	private double netRemittance;
 
 	@Builder
-	public OnlineCbftData(String transactionType, String requestChannel, String transactionDate, String valueDate,
+	public OnlineCbftData(int id, String transactionType, String requestChannel, String transactionDate,
+			String valueDate,
 			String businessDate, int applicantId, int beneficiaryId, String sendersCorrespondent,
 			String receiversCorrespondent, String channelTransactionRef, String recipientRef, String purposeOfPayment,
 			String remittanceInfo, String addRemittanceInfo, String senderToReceiverInfo,
 			String addSenderToReceiverInfo, String otherPaymentDetails, String requesterComments,
-			ForeignPaymentForm foreignPaymentForm, float creditMidRate, float debitMidRate, String chargeBearer,
-			float commissionExchange, float commissionHandle, float cableCharge, float totalFee, float netPayment,
-			float netRemittance) {
-		super(transactionType, requestChannel, transactionDate, valueDate, businessDate, applicantId, beneficiaryId,
+			ForeignPaymentForm foreignPaymentForm, double creditMidRate, double debitMidRate, String chargeBearer,
+			double commissionExchange, double commissionHandle, double cableCharge, double totalFee, double netPayment,
+			double netRemittance) {
+		super(id, transactionType, requestChannel, transactionDate, valueDate, businessDate, applicantId, beneficiaryId,
 				sendersCorrespondent, receiversCorrespondent, channelTransactionRef, recipientRef, purposeOfPayment,
 				remittanceInfo, addRemittanceInfo, senderToReceiverInfo, addSenderToReceiverInfo, otherPaymentDetails,
 				requesterComments);

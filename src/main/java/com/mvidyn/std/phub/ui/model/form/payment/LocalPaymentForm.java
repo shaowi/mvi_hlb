@@ -7,8 +7,8 @@ import lombok.Getter;
 public class LocalPaymentForm extends PaymentForm {
 
 	@Builder
-	public LocalPaymentForm(String remittanceCurrency, float remittanceAmount, String paymentCurrency,
-			float paymentAmount, float localEquivalentAmount, String debitAccountNumber, String creditAccountNumber,
+	public LocalPaymentForm(String remittanceCurrency, double remittanceAmount, String paymentCurrency,
+			double paymentAmount, double localEquivalentAmount, String debitAccountNumber, String creditAccountNumber,
 			String debitAccountCurrency, String creditAccountCurrency, String debitAccountName,
 			String creditAccountName, String debitAccountType, String creditAccountType, String debitAccountCifId,
 			String creditAccountCifId, String debitBranchCode, String creditBranchCode, String debitPostalCode,

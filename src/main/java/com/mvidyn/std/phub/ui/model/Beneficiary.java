@@ -16,4 +16,5 @@ public class Beneficiary extends Transactor {
 		super(id, idType, name, accountNumber, isResident, bankBic, addresses);
 		this.bankAddresses = bankAddresses;
 	}
+
 }

@@ -13,13 +13,14 @@ public class OnlineIntraBankForm extends OnlineForm {
 	private ForeignPaymentForm foreignPaymentForm;
 
 	@Builder
-	public OnlineIntraBankForm(String transactionType, String requestChannel, String transactionDate, String valueDate,
+	public OnlineIntraBankForm(int id, String transactionType, String requestChannel, String transactionDate,
+			String valueDate,
 			String businessDate, Applicant applicant, Beneficiary beneficiary, String sendersCorrespondent,
 			String receiversCorrespondent, String channelTransactionRef, String recipientRef, String purposeOfPayment,
 			String remittanceInfo, String addRemittanceInfo, String senderToReceiverInfo,
 			String addSenderToReceiverInfo, String otherPaymentDetails, String requesterComments,
 			ForeignPaymentForm foreignPaymentForm) {
-		super(transactionType, requestChannel, transactionDate, valueDate, businessDate, applicant, beneficiary,
+		super(id, transactionType, requestChannel, transactionDate, valueDate, businessDate, applicant, beneficiary,
 				sendersCorrespondent, receiversCorrespondent, channelTransactionRef, recipientRef, purposeOfPayment,
 				remittanceInfo, addRemittanceInfo, senderToReceiverInfo, addSenderToReceiverInfo, otherPaymentDetails,
 				requesterComments);

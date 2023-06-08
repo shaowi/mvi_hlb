@@ -31,4 +31,5 @@ public class Applicant extends Transactor {
 		this.countryCode = countryCode;
 		this.phoneNumber = phoneNumber;
 	}
+
 }

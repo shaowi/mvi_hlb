@@ -7,8 +7,8 @@ import lombok.Getter;
 @AllArgsConstructor
 public class PaymentForm {
 	private String remittanceCurrency;
-	private float remittanceAmount;
+	private double remittanceAmount;
 	private String paymentCurrency;
-	private float paymentAmount;
-	private float localEquivalentAmount;
+	private double paymentAmount;
+	private double localEquivalentAmount;
 }

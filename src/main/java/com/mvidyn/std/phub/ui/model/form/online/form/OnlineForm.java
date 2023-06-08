@@ -13,12 +13,12 @@ public class OnlineForm extends OnlineBase {
 	private Beneficiary beneficiary;
 
 	@Builder(builderMethodName = "onlineFormBuilder")
-	public OnlineForm(String transactionType, String requestChannel, String transactionDate, String valueDate,
+	public OnlineForm(int id, String transactionType, String requestChannel, String transactionDate, String valueDate,
 			String businessDate, Applicant applicant, Beneficiary beneficiary, String sendersCorrespondent,
 			String receiversCorrespondent, String channelTransactionRef, String recipientRef, String purposeOfPayment,
 			String remittanceInfo, String addRemittanceInfo, String senderToReceiverInfo,
 			String addSenderToReceiverInfo, String otherPaymentDetails, String requesterComments) {
-		super(transactionType, requestChannel, transactionDate, valueDate, businessDate, sendersCorrespondent,
+		super(id, transactionType, requestChannel, transactionDate, valueDate, businessDate, sendersCorrespondent,
 				receiversCorrespondent, channelTransactionRef, recipientRef, purposeOfPayment, remittanceInfo,
 				addRemittanceInfo, senderToReceiverInfo, addSenderToReceiverInfo, otherPaymentDetails,
 				requesterComments);
