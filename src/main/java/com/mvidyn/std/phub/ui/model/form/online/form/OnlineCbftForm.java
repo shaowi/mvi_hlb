@@ -70,7 +70,7 @@ public class OnlineCbftForm extends OnlineForm {
 				.addSenderToReceiverInfo(form.getAddSenderToReceiverInfo())
 				.otherPaymentDetails(form.getOtherPaymentDetails())
 				.requesterComments(form.getRequesterComments())
-				.foreignPaymentForm(form.getForeignPaymentForm())
+				.foreignPaymentFormId(form.getForeignPaymentForm().getId())
 				.creditMidRate(form.getCreditMidRate())
 				.debitMidRate(form.getDebitMidRate())
 				.chargeBearer(form.getChargeBearer())

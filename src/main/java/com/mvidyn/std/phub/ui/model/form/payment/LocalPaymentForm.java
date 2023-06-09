@@ -1,10 +1,19 @@
 package com.mvidyn.std.phub.ui.model.form.payment;
 
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
 import lombok.Builder;
 import lombok.Getter;
 
 @Getter
+@Table(name = "local_payments")
 public class LocalPaymentForm extends PaymentForm {
+
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private int id;
 
 	@Builder
 	public LocalPaymentForm(String remittanceCurrency, double remittanceAmount, String paymentCurrency,

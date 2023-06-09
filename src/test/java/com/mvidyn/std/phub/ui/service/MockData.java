@@ -1,7 +1,5 @@
 package com.mvidyn.std.phub.ui.service;
 
-import java.util.List;
-
 import com.mvidyn.std.phub.ui.model.Applicant;
 import com.mvidyn.std.phub.ui.model.Beneficiary;
 import com.mvidyn.std.phub.ui.model.form.online.data.OnlineCbftData;
@@ -12,15 +10,15 @@ public class MockData {
 
 	public static final Applicant APPLICANT = Applicant.builder().id(1).idType("idType").name("name")
 			.accountNumber("accountNumber")
-			.isResident(true).bankBic("bankBic").addresses(List.of("address1", "address2"))
+			.isResident(true).bankBic("bankBic").addresses("address1,address2")
 			.accountType("accountType")
 			.accountCurrency("accountCurrency").accountCifId("accountCifId").branchCode("branchCode")
 			.postalCode("postalCode").countryCode("countryCode").phoneNumber("phoneNumber").build();
 
 	public static final Beneficiary BENEFICIARY = Beneficiary.builder().id(2).idType("idType").name("name")
 			.accountNumber("accountNumber")
-			.isResident(true).bankBic("bankBic").addresses(List.of("address1", "address2"))
-			.bankAddresses(List.of("bankAddress1", "bankAddress2")).build();
+			.isResident(true).bankBic("bankBic").addresses("address1,address2")
+			.bankAddresses("bankAddress1,bankAddress2").build();
 
 	public static final ForeignPaymentForm FOREIGN_PAYMENT_FORM = ForeignPaymentForm.builder().remittanceCurrency("USD")
 			.remittanceAmount(1000)
@@ -84,6 +82,6 @@ public class MockData {
 			.netRemittance(0)
 			.applicantId(1)
 			.beneficiaryId(2)
-			.foreignPaymentForm(FOREIGN_PAYMENT_FORM)
+			.foreignPaymentFormId(FOREIGN_PAYMENT_FORM.getId())
 			.build();;
 }

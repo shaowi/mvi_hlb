@@ -1,18 +1,24 @@
 package com.mvidyn.std.phub.ui.model.form.online.data;
 
-import com.mvidyn.std.phub.ui.model.form.payment.ForeignPaymentForm;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.persistence.Table;
 import lombok.Builder;
 import lombok.Getter;
 
 @Getter
-@Entity
 @Table(name = "online_cbft_transaction")
+@Entity
 public class OnlineCbftData extends OnlineData {
 
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private int id;
+
 	// Payment details
-	private ForeignPaymentForm foreignPaymentForm;
+	private int foreignPaymentFormId;
 
 	// Charges details
 	private double creditMidRate;
@@ -32,14 +38,15 @@ public class OnlineCbftData extends OnlineData {
 			String receiversCorrespondent, String channelTransactionRef, String recipientRef, String purposeOfPayment,
 			String remittanceInfo, String addRemittanceInfo, String senderToReceiverInfo,
 			String addSenderToReceiverInfo, String otherPaymentDetails, String requesterComments,
-			ForeignPaymentForm foreignPaymentForm, double creditMidRate, double debitMidRate, String chargeBearer,
+			int foreignPaymentFormId, double creditMidRate, double debitMidRate, String chargeBearer,
 			double commissionExchange, double commissionHandle, double cableCharge, double totalFee, double netPayment,
 			double netRemittance) {
-		super(id, transactionType, requestChannel, transactionDate, valueDate, businessDate, applicantId, beneficiaryId,
+		super(transactionType, requestChannel, transactionDate, valueDate, businessDate, applicantId, beneficiaryId,
 				sendersCorrespondent, receiversCorrespondent, channelTransactionRef, recipientRef, purposeOfPayment,
 				remittanceInfo, addRemittanceInfo, senderToReceiverInfo, addSenderToReceiverInfo, otherPaymentDetails,
 				requesterComments);
-		this.foreignPaymentForm = foreignPaymentForm;
+		this.id = id;
+		this.foreignPaymentFormId = foreignPaymentFormId;
 		this.creditMidRate = creditMidRate;
 		this.debitMidRate = debitMidRate;
 		this.chargeBearer = chargeBearer;

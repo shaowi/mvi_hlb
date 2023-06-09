@@ -1,8 +1,9 @@
 package com.mvidyn.std.phub.ui.model;
 
-import java.util.List;
-
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.persistence.Table;
 import lombok.Builder;
 import lombok.Getter;
@@ -11,6 +12,10 @@ import lombok.Getter;
 @Entity
 @Table(name = "applicants")
 public class Applicant extends Transactor {
+
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private int id;
 
 	private String accountType;
 	private String accountCurrency;
@@ -24,9 +29,10 @@ public class Applicant extends Transactor {
 
 	@Builder
 	public Applicant(int id, String idType, String name, String accountNumber, boolean isResident, String bankBic,
-			List<String> addresses, String accountType, String accountCurrency, String accountCifId, String branchCode,
+			String addresses, String accountType, String accountCurrency, String accountCifId, String branchCode,
 			String postalCode, String countryCode, String phoneNumber) {
-		super(id, idType, name, accountNumber, isResident, bankBic, addresses);
+		super(idType, name, accountNumber, isResident, bankBic, addresses);
+		this.id = id;
 		this.accountType = accountType;
 		this.accountCurrency = accountCurrency;
 		this.accountCifId = accountCifId;
