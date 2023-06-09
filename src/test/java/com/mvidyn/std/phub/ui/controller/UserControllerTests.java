@@ -28,8 +28,8 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 @WebMvcTest(UserController.class)
-@AutoConfigureMockMvc(addFilters = false)
 @ExtendWith(MockitoExtension.class)
+@AutoConfigureMockMvc(addFilters = false)
 public class UserControllerTests {
 
 	private static final String BASE = "/user";
@@ -53,6 +53,8 @@ public class UserControllerTests {
 				.access(Access.ADMIN)
 				.role(Role.MAKER)
 				.build();
+
+		when(userService.saveUser(user)).thenReturn(user);
 	}
 
 	@Test
@@ -205,9 +207,8 @@ public class UserControllerTests {
 		String endpoint = BASE + "/current";
 		MockHttpSession session = new MockHttpSession();
 
-		// Sign up user and set session
-		userService.saveUser(user);
-		session.setAttribute("user", user.getId());
+		// set a user session
+		session.setAttribute("user", user);
 
 		// Act
 		ResultActions response = mockMvc.perform(MockMvcRequestBuilders.get(endpoint).session(session));

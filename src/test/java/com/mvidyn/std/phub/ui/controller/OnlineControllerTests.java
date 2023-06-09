@@ -29,8 +29,8 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 @WebMvcTest(OnlineController.class)
-@AutoConfigureMockMvc(addFilters = false)
 @ExtendWith(MockitoExtension.class)
+@AutoConfigureMockMvc(addFilters = false)
 public class OnlineControllerTests {
 
 	private static final String BASE = "/online";
@@ -133,12 +133,13 @@ public class OnlineControllerTests {
 		assertNotNull(onlineService);
 		assertNotNull(objectMapper);
 		assertNotNull(form);
+		assertNotNull(data);
 	}
 
 	@Test
 	public void createCbftTransaction_ReturnCreated() throws Exception {
 		// Arrange
-		String endpoint = BASE + "/cbft";
+		String endpoint = BASE + "/cbft/create";
 		when(onlineService.createCbftTransaction(ArgumentMatchers.any())).thenReturn(data);
 
 		// Act

@@ -29,7 +29,7 @@ public class UserController {
 	public ResponseEntity<User> login(@RequestBody User user, HttpSession session) {
 		User dbUser = userService.getUser(user);
 		if (dbUser != null) {
-			session.setAttribute("user", dbUser.getId());
+			session.setAttribute("user", dbUser);
 			LOGGER.info("User " + dbUser.getName() + " logged in");
 			return new ResponseEntity<>(dbUser, HttpStatus.OK);
 		}
@@ -63,9 +63,9 @@ public class UserController {
 
 	@GetMapping(path = "/current")
 	public ResponseEntity<User> getCurrentUser(HttpSession session) {
-		Object userId = session.getAttribute("user");
-		if (userId != null) {
-			User user = userService.getUserById((int) userId);
+		Object userObj = session.getAttribute("user");
+		if (userObj != null) {
+			User user = (User) userObj;
 			LOGGER.info("Get current user " + user.getName());
 			return new ResponseEntity<>(user, HttpStatus.OK);
 		}

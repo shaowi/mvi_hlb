@@ -1,10 +1,14 @@
 package com.mvidyn.std.phub.ui.model.form.online.data;
 
 import com.mvidyn.std.phub.ui.model.form.payment.ForeignPaymentForm;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 import lombok.Builder;
 import lombok.Getter;
 
 @Getter
+@Entity
+@Table(name = "online_cbft_transaction")
 public class OnlineCbftData extends OnlineData {
 
 	// Payment details

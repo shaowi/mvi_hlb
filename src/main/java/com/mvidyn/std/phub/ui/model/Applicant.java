@@ -2,10 +2,14 @@ package com.mvidyn.std.phub.ui.model;
 
 import java.util.List;
 
+import javax.persistence.Entity;
+import javax.persistence.Table;
 import lombok.Builder;
 import lombok.Getter;
 
 @Getter
+@Entity
+@Table(name = "applicants")
 public class Applicant extends Transactor {
 
 	private String accountType;
