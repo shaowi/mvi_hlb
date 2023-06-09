@@ -10,7 +10,7 @@ Before you begin, ensure that you have the following prerequisites installed on 
 	- Extension Pack for Java
 	- Test Runner for Java
 
-## Steps for local development 
+## Steps for local development
 
 1. Clone the repository: Open a terminal or command prompt and navigate to the directory where you want to clone the Spring Boot application. Run the following command to clone the repository:
 
