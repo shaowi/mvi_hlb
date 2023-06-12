@@ -13,8 +13,8 @@ import com.mvidyn.std.phub.ui.model.User;
 import com.mvidyn.std.phub.ui.repository.UserRepository;
 import com.mvidyn.std.phub.ui.service.impl.UserServiceImpl;
 import org.assertj.core.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.junit.Before;
+import org.junit.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -35,17 +35,17 @@ public class UserServiceTests {
 	private User userA;
 	private User userB;
 
-	@BeforeEach
+	@Before
 	public void setup() {
 		userA = User.builder()
-				.id(0)
+				.id(0L)
 				.name("maker")
 				.password("pw")
 				.access(Access.ADMIN)
 				.role(Role.MAKER)
 				.build();
 		userB = User.builder()
-				.id(1)
+				.id(1L)
 				.name("checker")
 				.password("pw")
 				.access(Access.ADMIN)

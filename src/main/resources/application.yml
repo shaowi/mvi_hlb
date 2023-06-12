@@ -12,5 +12,3 @@ spring:
     store-type: jdbc # To use Spring Session JDBC for maintaining session state
     jdbc:
       initialize-schema: always
-      timeout:
-        seconds: 900
