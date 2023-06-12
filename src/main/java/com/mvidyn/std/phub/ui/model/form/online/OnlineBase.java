@@ -1,11 +1,23 @@
 package com.mvidyn.std.phub.ui.model.form.online;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 @Getter
+@Entity
 @AllArgsConstructor
-public class OnlineBase {
+@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
+public abstract class OnlineBase {
+
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private long id;
 
 	private String transactionType;
 	private String requestChannel;

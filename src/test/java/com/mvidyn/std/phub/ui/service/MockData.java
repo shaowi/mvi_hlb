@@ -53,7 +53,7 @@ public class MockData {
 			.applicant(APPLICANT)
 			.beneficiary(BENEFICIARY)
 			.foreignPaymentForm(FOREIGN_PAYMENT_FORM)
-			.build();;
+			.build();
 
 	public static final OnlineCbftData ONLINE_CBFT_DATA = OnlineCbftData.builder()
 			.id(0)
@@ -83,5 +83,5 @@ public class MockData {
 			.applicantId(1)
 			.beneficiaryId(2)
 			.foreignPaymentFormId(FOREIGN_PAYMENT_FORM.getId())
-			.build();;
+			.build();
 }

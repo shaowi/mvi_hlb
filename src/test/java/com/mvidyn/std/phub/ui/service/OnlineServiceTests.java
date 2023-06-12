@@ -5,6 +5,9 @@ import static org.mockito.Mockito.when;
 
 import com.mvidyn.std.phub.ui.model.form.online.data.OnlineCbftData;
 import com.mvidyn.std.phub.ui.model.form.online.form.OnlineCbftForm;
+import com.mvidyn.std.phub.ui.repository.ApplicantRepository;
+import com.mvidyn.std.phub.ui.repository.BeneficiaryRepository;
+import com.mvidyn.std.phub.ui.repository.ForeignPaymentRepository;
 import com.mvidyn.std.phub.ui.repository.OnlineCbftRepository;
 import com.mvidyn.std.phub.ui.service.impl.OnlineServiceImpl;
 import org.assertj.core.api.Assertions;
@@ -23,6 +26,15 @@ public class OnlineServiceTests {
 
 	@Mock
 	private OnlineCbftRepository onlineRepository;
+
+	@Mock
+	private ApplicantRepository applicantRepository;
+
+	@Mock
+	private BeneficiaryRepository beneficiaryRepository;
+
+	@Mock
+	private ForeignPaymentRepository foreignPaymentRepository;
 
 	@InjectMocks
 	private OnlineServiceImpl onlineService;
