@@ -12,5 +12,5 @@ public interface UserService {
 
 	public User getUser(User u1);
 
-	public User getUserById(int id);
+	public User getUserById(long id);
 }

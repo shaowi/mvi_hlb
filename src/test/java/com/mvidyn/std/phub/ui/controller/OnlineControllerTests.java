@@ -72,7 +72,7 @@ public class OnlineControllerTests {
 
 		// Assert
 		response.andExpect(MockMvcResultMatchers.status().isCreated())
-				.andExpect(MockMvcResultMatchers.jsonPath("$.id", CoreMatchers.is(data.getId())));
+				.andExpect(MockMvcResultMatchers.jsonPath("$.id", CoreMatchers.is((int) data.getId())));
 	}
 
 }

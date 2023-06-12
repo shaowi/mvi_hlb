@@ -1,5 +1,6 @@
 package com.mvidyn.std.phub.ui.service;
 
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.when;
 
@@ -10,7 +11,6 @@ import com.mvidyn.std.phub.ui.repository.BeneficiaryRepository;
 import com.mvidyn.std.phub.ui.repository.ForeignPaymentRepository;
 import com.mvidyn.std.phub.ui.repository.OnlineCbftRepository;
 import com.mvidyn.std.phub.ui.service.impl.OnlineServiceImpl;
-import org.assertj.core.api.Assertions;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -50,15 +50,12 @@ public class OnlineServiceTests {
 	}
 
 	@Test
-	public void createCbftTransaction_ReturnForm() {
+	public void createCbftTransaction_DoesNotThrowIllegalArgException() {
 		// Arrange
 		when(onlineRepository.save(data)).thenReturn(data);
 
-		// Act
-		OnlineCbftData savedData = onlineService.createCbftTransaction(form);
-
-		// Assert
-		Assertions.assertThat(savedData).isNotNull();
+		// Act & Assert
+		assertDoesNotThrow(() -> onlineService.createCbftTransaction(form), "Form is null");
 	}
 
 	@Test

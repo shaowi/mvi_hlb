@@ -38,14 +38,14 @@ public class UserServiceTests {
 	@Before
 	public void setup() {
 		userA = User.builder()
-				.id(0)
+				.id(0L)
 				.name("maker")
 				.password("pw")
 				.access(Access.ADMIN)
 				.role(Role.MAKER)
 				.build();
 		userB = User.builder()
-				.id(1)
+				.id(1L)
 				.name("checker")
 				.password("pw")
 				.access(Access.ADMIN)

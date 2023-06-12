@@ -26,7 +26,7 @@ public class MockData {
 			.exchangeRate(1.0).creditFxRate(1.0).debitFxRate(1.0).build();
 
 	public static final OnlineCbftForm ONLINE_CBFT_FORM = OnlineCbftForm.builder()
-			.id(0)
+			.id(0L)
 			.transactionDate("2020-01-01")
 			.transactionType("CBFT")
 			.requestChannel("WEB")
@@ -56,7 +56,7 @@ public class MockData {
 			.build();
 
 	public static final OnlineCbftData ONLINE_CBFT_DATA = OnlineCbftData.builder()
-			.id(0)
+			.id(0L)
 			.transactionDate("2020-01-01")
 			.transactionType("CBFT")
 			.requestChannel("WEB")

@@ -41,7 +41,7 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public User getUserById(int id) {
+	public User getUserById(long id) {
 		List<User> users = this.getAllUsers();
 		return users.stream()
 				.filter(user -> user.getId() == id)
