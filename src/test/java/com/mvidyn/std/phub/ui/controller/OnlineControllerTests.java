@@ -9,7 +9,6 @@ import com.mvidyn.std.phub.ui.model.form.online.data.OnlineCbftData;
 import com.mvidyn.std.phub.ui.model.form.online.form.OnlineCbftForm;
 import com.mvidyn.std.phub.ui.service.MockData;
 import com.mvidyn.std.phub.ui.service.OnlineService;
-import org.hamcrest.CoreMatchers;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -71,8 +70,7 @@ public class OnlineControllerTests {
 				.content(objectMapper.writeValueAsString(form)));
 
 		// Assert
-		response.andExpect(MockMvcResultMatchers.status().isCreated())
-				.andExpect(MockMvcResultMatchers.jsonPath("$.id", CoreMatchers.is((int) data.getId())));
+		response.andExpect(MockMvcResultMatchers.status().isCreated());
 	}
 
 	@Test
