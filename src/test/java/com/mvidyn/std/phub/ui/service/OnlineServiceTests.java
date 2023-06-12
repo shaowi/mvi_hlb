@@ -59,8 +59,40 @@ public class OnlineServiceTests {
 	}
 
 	@Test
-	public void createCbftTransaction_ThrowIllegalArgException() {
+	public void createCbftTransaction_InvalidForm_ThrowIllegalArgException() {
 		assertThrows(IllegalArgumentException.class, () -> onlineService.createCbftTransaction(null));
 	}
 
+	@Test
+	public void createCbftTransaction_InvalidFormPayment_ThrowIllegalArgException() {
+		try {
+			OnlineCbftForm badForm = form.clone();
+			badForm.setForeignPaymentForm(null);
+			assertThrows(IllegalArgumentException.class, () -> onlineService.createCbftTransaction(badForm));
+		} catch (CloneNotSupportedException e) {
+			e.printStackTrace();
+		}
+	}
+
+	@Test
+	public void createCbftTransaction_InvalidFormApplicant_ThrowIllegalArgException() {
+		try {
+			OnlineCbftForm badForm = form.clone();
+			badForm.setApplicant(null);
+			assertThrows(IllegalArgumentException.class, () -> onlineService.createCbftTransaction(badForm));
+		} catch (CloneNotSupportedException e) {
+			e.printStackTrace();
+		}
+	}
+
+	@Test
+	public void createCbftTransaction_InvalidFormBeneficiary_ThrowIllegalArgException() {
+		try {
+			OnlineCbftForm badForm = form.clone();
+			badForm.setBeneficiary(null);
+			assertThrows(IllegalArgumentException.class, () -> onlineService.createCbftTransaction(badForm));
+		} catch (CloneNotSupportedException e) {
+			e.printStackTrace();
+		}
+	}
 }

@@ -6,9 +6,11 @@ import com.mvidyn.std.phub.ui.model.form.online.data.OnlineCbftData;
 import com.mvidyn.std.phub.ui.model.form.payment.ForeignPaymentForm;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.Setter;
 
 @Getter
-public class OnlineCbftForm extends OnlineForm {
+@Setter
+public class OnlineCbftForm extends OnlineForm implements Cloneable {
 
 	// Payment details
 	private ForeignPaymentForm foreignPaymentForm;
@@ -82,4 +84,10 @@ public class OnlineCbftForm extends OnlineForm {
 				.netRemittance(form.getNetRemittance())
 				.build();
 	}
+
+	@Override
+	public OnlineCbftForm clone() throws CloneNotSupportedException {
+		return (OnlineCbftForm) super.clone();
+	}
+
 }

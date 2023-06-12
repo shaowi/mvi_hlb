@@ -4,8 +4,10 @@ import com.mvidyn.std.phub.ui.model.Applicant;
 import com.mvidyn.std.phub.ui.model.Beneficiary;
 import com.mvidyn.std.phub.ui.model.form.online.OnlineBase;
 import lombok.Getter;
+import lombok.Setter;
 
 @Getter
+@Setter
 public abstract class OnlineForm extends OnlineBase {
 
 	private Applicant applicant;

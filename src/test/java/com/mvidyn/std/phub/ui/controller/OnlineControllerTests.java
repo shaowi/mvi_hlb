@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.Mockito.when;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.mvidyn.std.phub.ui.exception.Message;
 import com.mvidyn.std.phub.ui.model.form.online.data.OnlineCbftData;
 import com.mvidyn.std.phub.ui.model.form.online.form.OnlineCbftForm;
 import com.mvidyn.std.phub.ui.service.MockData;
@@ -12,7 +13,6 @@ import org.hamcrest.CoreMatchers;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.ArgumentMatchers;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -63,7 +63,7 @@ public class OnlineControllerTests {
 	public void createCbftTransaction_ReturnCreated() throws Exception {
 		// Arrange
 		String endpoint = BASE + "/cbft/create";
-		when(onlineService.createCbftTransaction(ArgumentMatchers.any())).thenReturn(data);
+		when(onlineService.createCbftTransaction(form)).thenReturn(data);
 
 		// Act
 		ResultActions response = mockMvc.perform(MockMvcRequestBuilders.post(endpoint)
@@ -75,4 +75,19 @@ public class OnlineControllerTests {
 				.andExpect(MockMvcResultMatchers.jsonPath("$.id", CoreMatchers.is((int) data.getId())));
 	}
 
+	@Test
+	public void createCbftTransaction_ReturnBadRequest() throws Exception {
+		// Arrange
+		String endpoint = BASE + "/cbft/create";
+		when(onlineService.createCbftTransaction(null))
+				.thenThrow(new IllegalArgumentException(Message.INVALID_FORM));
+
+		// Act
+		ResultActions response = mockMvc.perform(MockMvcRequestBuilders.post(endpoint)
+				.contentType(MediaType.APPLICATION_JSON)
+				.content(objectMapper.writeValueAsString(null)));
+
+		// Assert
+		response.andExpect(MockMvcResultMatchers.status().isBadRequest());
+	}
 }
