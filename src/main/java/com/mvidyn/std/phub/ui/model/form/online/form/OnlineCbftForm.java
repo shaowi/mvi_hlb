@@ -38,6 +38,7 @@ public class OnlineCbftForm extends OnlineForm {
 				sendersCorrespondent, receiversCorrespondent, channelTransactionRef, recipientRef, purposeOfPayment,
 				remittanceInfo, addRemittanceInfo, senderToReceiverInfo, addSenderToReceiverInfo, otherPaymentDetails,
 				requesterComments);
+		this.foreignPaymentForm = foreignPaymentForm;
 		this.creditMidRate = creditMidRate;
 		this.debitMidRate = debitMidRate;
 		this.chargeBearer = chargeBearer;

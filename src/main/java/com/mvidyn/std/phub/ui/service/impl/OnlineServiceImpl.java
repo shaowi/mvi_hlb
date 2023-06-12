@@ -9,10 +9,10 @@ import com.mvidyn.std.phub.ui.model.form.online.data.OnlineCbftData;
 import com.mvidyn.std.phub.ui.model.form.online.form.OnlineCbftForm;
 import com.mvidyn.std.phub.ui.model.form.payment.ForeignPaymentForm;
 import com.mvidyn.std.phub.ui.model.form.payment.PaymentForm;
-import com.mvidyn.std.phub.ui.repository.OnlineCbftRepository;
 import com.mvidyn.std.phub.ui.repository.ApplicantRepository;
 import com.mvidyn.std.phub.ui.repository.BeneficiaryRepository;
 import com.mvidyn.std.phub.ui.repository.ForeignPaymentRepository;
+import com.mvidyn.std.phub.ui.repository.OnlineCbftRepository;
 import com.mvidyn.std.phub.ui.service.OnlineService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -57,12 +57,14 @@ public class OnlineServiceImpl implements OnlineService {
 		for (Transactor t : transactors) {
 			if (t instanceof Applicant) {
 				Applicant applicant = (Applicant) t;
-				if (applicantRepository.findById(applicant.getId()) == null) {
+				boolean hasApplicant = applicantRepository.existsById(applicant.getId());
+				if (!hasApplicant) {
 					applicantRepository.save(applicant);
 				}
 			} else if (t instanceof Beneficiary) {
 				Beneficiary beneficiary = (Beneficiary) t;
-				if (beneficiaryRepository.findById(beneficiary.getId()) == null) {
+				boolean hasBeneficiary = beneficiaryRepository.existsById(beneficiary.getId());
+				if (!hasBeneficiary) {
 					beneficiaryRepository.save(beneficiary);
 				}
 			}
