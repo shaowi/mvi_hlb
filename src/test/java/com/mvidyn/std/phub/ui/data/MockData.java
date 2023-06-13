@@ -1,12 +1,31 @@
 package com.mvidyn.std.phub.ui.data;
 
+import com.mvidyn.std.phub.ui.model.Access;
 import com.mvidyn.std.phub.ui.model.Applicant;
 import com.mvidyn.std.phub.ui.model.Beneficiary;
+import com.mvidyn.std.phub.ui.model.Role;
+import com.mvidyn.std.phub.ui.model.User;
 import com.mvidyn.std.phub.ui.model.form.online.data.OnlineCbftData;
 import com.mvidyn.std.phub.ui.model.form.online.form.OnlineCbftForm;
 import com.mvidyn.std.phub.ui.model.form.payment.ForeignPaymentForm;
 
 public class MockData {
+
+	public static final User userA = User.builder()
+			.id(0)
+			.name("maker")
+			.password("pw")
+			.access(Access.ADMIN)
+			.role(Role.MAKER)
+			.build();
+
+	public static final User userB = User.builder()
+			.id(1)
+			.name("checker")
+			.password("pw")
+			.access(Access.ADMIN)
+			.role(Role.CHECKER)
+			.build();
 
 	public static final Applicant APPLICANT = Applicant.builder().id(1).idType("idType").name("name")
 			.accountNumber("accountNumber")

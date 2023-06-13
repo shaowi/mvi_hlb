@@ -2,6 +2,7 @@ package com.mvidyn.std.phub.ui.controller;
 
 import java.util.List;
 
+import com.mvidyn.std.phub.ui.constant.Session;
 import com.mvidyn.std.phub.ui.exception.Message;
 import com.mvidyn.std.phub.ui.model.User;
 import com.mvidyn.std.phub.ui.service.UserService;
@@ -30,7 +31,7 @@ public class UserController {
 	public ResponseEntity<User> login(@RequestBody User user, HttpSession session) {
 		User dbUser = userService.getUser(user);
 		if (dbUser != null) {
-			session.setAttribute("currentUserId", dbUser.getId());
+			session.setAttribute(Session.CURRENT_USER_ID, dbUser.getId());
 			LOGGER.info("User " + dbUser.getName() + " logged in");
 			return new ResponseEntity<>(dbUser, HttpStatus.OK);
 		}
@@ -64,10 +65,10 @@ public class UserController {
 
 	@GetMapping(path = "/current")
 	public ResponseEntity<User> getCurrentUser(HttpSession session) {
-		Object userId = session.getAttribute("currentUserId");
+		Object userId = session.getAttribute(Session.CURRENT_USER_ID);
 		if (userId != null) {
 			User user = userService.getUserById((long) userId);
-			LOGGER.info("Get current user " + user.getName());
+			LOGGER.info("Get current user_id: " + userId);
 			return new ResponseEntity<>(user, HttpStatus.OK);
 		}
 		LOGGER.info("No user logged in");

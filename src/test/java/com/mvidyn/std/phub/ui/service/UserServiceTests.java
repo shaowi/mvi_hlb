@@ -1,14 +1,13 @@
 package com.mvidyn.std.phub.ui.service;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.mockito.Mockito.when;
 import static org.mockito.BDDMockito.given;
+import static org.mockito.Mockito.when;
 
 import java.util.Arrays;
 import java.util.List;
 
-import com.mvidyn.std.phub.ui.model.Access;
-import com.mvidyn.std.phub.ui.model.Role;
+import com.mvidyn.std.phub.ui.data.MockData;
 import com.mvidyn.std.phub.ui.model.User;
 import com.mvidyn.std.phub.ui.repository.UserRepository;
 import com.mvidyn.std.phub.ui.service.impl.UserServiceImpl;
@@ -37,20 +36,8 @@ public class UserServiceTests {
 
 	@Before
 	public void setup() {
-		userA = User.builder()
-				.id(0L)
-				.name("maker")
-				.password("pw")
-				.access(Access.ADMIN)
-				.role(Role.MAKER)
-				.build();
-		userB = User.builder()
-				.id(1L)
-				.name("checker")
-				.password("pw")
-				.access(Access.ADMIN)
-				.role(Role.CHECKER)
-				.build();
+		userA = MockData.userA;
+		userB = MockData.userB;
 	}
 
 	@Test

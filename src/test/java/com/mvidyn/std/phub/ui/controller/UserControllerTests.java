@@ -5,6 +5,8 @@ import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.when;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.mvidyn.std.phub.ui.constant.Session;
+import com.mvidyn.std.phub.ui.data.MockData;
 import com.mvidyn.std.phub.ui.exception.Message;
 import com.mvidyn.std.phub.ui.model.Access;
 import com.mvidyn.std.phub.ui.model.Role;
@@ -47,14 +49,8 @@ public class UserControllerTests {
 
 	@BeforeEach
 	public void setup() {
-		user = User.builder()
-				.name("maker")
-				.password("pw")
-				.access(Access.ADMIN)
-				.role(Role.MAKER)
-				.build();
-
-		when(userService.saveUser(user)).thenReturn(user);
+		user = MockData.userA;
+		userService.saveUser(user);
 	}
 
 	@Test
@@ -145,20 +141,20 @@ public class UserControllerTests {
 
 	@Test
 	public void loginExistingUser_ReturnOk() throws Exception {
-		// Arrange
-		when(userService.getUser(user)).thenReturn(user);
-		String endpoint = BASE + "/login";
+	// Arrange
+	when(userService.getUser(user)).thenReturn(user);
+	String endpoint = BASE + "/login";
 
-		// Act
-		ResultActions response =
-		mockMvc.perform(MockMvcRequestBuilders.post(endpoint)
-				.contentType(MediaType.APPLICATION_JSON)
-				.content(objectMapper.writeValueAsString(user)));
+	// Act
+	ResultActions response =
+	mockMvc.perform(MockMvcRequestBuilders.post(endpoint)
+	.contentType(MediaType.APPLICATION_JSON)
+	.content(objectMapper.writeValueAsString(user)));
 
-		// Assert
-		response.andExpect(MockMvcResultMatchers.status().isOk())
-				.andExpect(MockMvcResultMatchers.jsonPath("$.name").value(user.getName()))
-				.andExpect(MockMvcResultMatchers.jsonPath("$.password").value(user.getPassword()));
+	// Assert
+	response.andExpect(MockMvcResultMatchers.status().isOk())
+	.andExpect(MockMvcResultMatchers.jsonPath("$.name").value(user.getName()))
+	.andExpect(MockMvcResultMatchers.jsonPath("$.password").value(user.getPassword()));
 	}
 
 	@Test
@@ -202,13 +198,13 @@ public class UserControllerTests {
 	}
 
 	@Test
-	public void getCurrentUser_ReturnsUser() throws Exception {
+	public void getCurrentUser_ReturnsOk() throws Exception {
 		// Arrange
 		String endpoint = BASE + "/current";
 		MockHttpSession session = new MockHttpSession();
 
-		// set a user session
-		session.setAttribute("user", user);
+		// Set a user session
+		session.setAttribute(Session.CURRENT_USER_ID, user.getId());
 
 		// Act
 		ResultActions response = mockMvc.perform(MockMvcRequestBuilders.get(endpoint).session(session));
