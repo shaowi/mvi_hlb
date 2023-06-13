@@ -1,0 +1,14 @@
+[
+  {
+    "name": "phbmaker",
+    "password": "welcome12",
+    "role": "MAKER",
+    "access": "ADMIN"
+  },
+  {
+    "name": "phbchecker",
+    "password": "welcome12",
+    "role": "CHECKER",
+    "access": "ADMIN"
+  }
+]

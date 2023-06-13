@@ -4,10 +4,10 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.Mockito.when;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.mvidyn.std.phub.ui.data.MockData;
 import com.mvidyn.std.phub.ui.exception.Message;
 import com.mvidyn.std.phub.ui.model.form.online.data.OnlineCbftData;
 import com.mvidyn.std.phub.ui.model.form.online.form.OnlineCbftForm;
-import com.mvidyn.std.phub.ui.service.MockData;
 import com.mvidyn.std.phub.ui.service.OnlineService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

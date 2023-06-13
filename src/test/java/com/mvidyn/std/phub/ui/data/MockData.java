@@ -1,4 +1,4 @@
-package com.mvidyn.std.phub.ui.service;
+package com.mvidyn.std.phub.ui.data;
 
 import com.mvidyn.std.phub.ui.model.Applicant;
 import com.mvidyn.std.phub.ui.model.Beneficiary;
