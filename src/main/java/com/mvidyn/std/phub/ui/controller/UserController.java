@@ -2,6 +2,7 @@ package com.mvidyn.std.phub.ui.controller;
 
 import java.util.List;
 
+import com.mvidyn.std.phub.ui.exception.Message;
 import com.mvidyn.std.phub.ui.model.User;
 import com.mvidyn.std.phub.ui.service.UserService;
 import javax.servlet.http.HttpSession;
@@ -29,11 +30,11 @@ public class UserController {
 	public ResponseEntity<User> login(@RequestBody User user, HttpSession session) {
 		User dbUser = userService.getUser(user);
 		if (dbUser != null) {
-			session.setAttribute("user", dbUser);
+			session.setAttribute("currentUserId", dbUser.getId());
 			LOGGER.info("User " + dbUser.getName() + " logged in");
 			return new ResponseEntity<>(dbUser, HttpStatus.OK);
 		}
-		LOGGER.error("User failed to login");
+		LOGGER.error(Message.NON_EXISTENT_USER);
 		return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
 	}
 
@@ -51,7 +52,7 @@ public class UserController {
 			return new ResponseEntity<>(userService.saveUser(user), HttpStatus.CREATED);
 		} catch (IllegalArgumentException e) {
 			LOGGER.error(e.getMessage());
-			return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
 	}
 
@@ -63,9 +64,9 @@ public class UserController {
 
 	@GetMapping(path = "/current")
 	public ResponseEntity<User> getCurrentUser(HttpSession session) {
-		Object userObj = session.getAttribute("user");
-		if (userObj != null) {
-			User user = (User) userObj;
+		Object userId = session.getAttribute("currentUserId");
+		if (userId != null) {
+			User user = userService.getUserById((long) userId);
 			LOGGER.info("Get current user " + user.getName());
 			return new ResponseEntity<>(user, HttpStatus.OK);
 		}

@@ -11,12 +11,12 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+@Data
+@Entity
+@Builder(toBuilder = true)
+@Table(name = "users")
 @NoArgsConstructor
 @AllArgsConstructor
-@Data
-@Builder(toBuilder = true)
-@Entity
-@Table(name = "users")
 public class User {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -31,7 +31,7 @@ public class User {
 	@Override
 	public String toString() {
 		return String.format(
-				"User[id=%d, name='%s', password='%s']",
+				"User[id=%ld, name='%s', password='%s']",
 				id, name, password);
 	}
 }
