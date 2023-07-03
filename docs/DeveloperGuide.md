@@ -1,6 +1,6 @@
 # Spring Boot Guide: Controllers, Services, Models, and Repositories
 
-In a Spring Boot application, Controllers, Services, Models, and Repositories are key components that help organize and structure the application's codebase. Understanding the purpose of each of these components is essential for building scalable and maintainable applications. Let's explore the role of each component in detail:
+In this Spring Boot application, the Controllers, Services, Models, and Repositories are key components that help organize and structure the application's codebase. Understanding the purpose of each of these components is essential for building scalable and maintainable applications. Let's explore the role of each component in detail:
 
 ## Controllers
 

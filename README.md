@@ -6,6 +6,7 @@ Before you begin, ensure that you have the following prerequisites installed on 
 
 1. Git (version control system)
 1. Java Development Kit (JDK) 11
+1. MySQL
 1. Visual Studio Code
 	- Extension Pack for Java
 	- Test Runner for Java
@@ -18,7 +19,11 @@ Before you begin, ensure that you have the following prerequisites installed on 
 	git clone https://github.com/shaowi/mvi_hlb.git
 	```
 
-2. Navigate to the project directory: After the cloning process is complete, navigate into the cloned project directory using the following command and open it in VS code.
+1. Start up MySQL server by running it in a port number (One such app to execute it is [XAMPP](https://www.apachefriends.org/download.html))
+
+	![XAMPP_MySQL](./docs/images/XAMPP_MySQL.png)
+
+1. Navigate to the project directory: After the cloning process is complete, navigate into the cloned project directory using the following command and open it in VS code.
 
 	```bash
 	cd mvi_hlb
@@ -26,5 +31,5 @@ Before you begin, ensure that you have the following prerequisites installed on 
 	code .
 	```
 
-3. When the project is successfully opened and loaded in VS code, right click on `HlbApplication.java` and click `Run Java`.
-4. An instance of the Spring Boot application will be started.
+1. When the project is successfully opened and loaded in VS code, right click on `HlbApplication.java` and click `Run Java`.
+1. An instance of the Spring Boot application will be started.
