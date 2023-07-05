@@ -49,6 +49,11 @@ public class UserServiceImpl implements UserService {
 				.orElse(null);
 	}
 
+	@Override
+	public void setToken(User user) {
+		user.setToken(generateToken());
+	}
+
 	private boolean isInvalidUser(User user) {
 		return user == null || user.getId() == -1
 				|| user.getName() == null || user.getPassword() == null
@@ -61,4 +66,7 @@ public class UserServiceImpl implements UserService {
 				.anyMatch(u -> u.getName().equals(user.getName()));
 	}
 
+	private String generateToken() {
+		return "token";
+	}
 }

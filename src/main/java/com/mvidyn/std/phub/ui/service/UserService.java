@@ -13,4 +13,6 @@ public interface UserService {
 	public User getUser(User u1);
 
 	public User getUserById(long id);
+
+	public void setToken(User user);
 }

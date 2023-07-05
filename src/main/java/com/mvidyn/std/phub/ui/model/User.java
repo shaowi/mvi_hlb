@@ -1,11 +1,13 @@
 package com.mvidyn.std.phub.ui.model;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -27,6 +29,9 @@ public class User {
 	private String password;
 	private Access access;
 	private Role role;
+	@JsonInclude(JsonInclude.Include.NON_NULL)
+	@Transient
+	private String token;
 
 	@Override
 	public String toString() {

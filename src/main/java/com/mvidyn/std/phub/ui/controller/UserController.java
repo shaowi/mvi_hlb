@@ -10,16 +10,20 @@ import javax.servlet.http.HttpSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/user")
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 public class UserController {
 
 	@Autowired
@@ -28,11 +32,15 @@ public class UserController {
 	private static final Logger LOGGER = LoggerFactory.getLogger(UserController.class);
 
 	@PostMapping("/login")
-	public ResponseEntity<User> login(@RequestBody User user, HttpSession session) {
+	public ResponseEntity<User> login(@RequestHeader HttpHeaders headers, @RequestBody User user, HttpSession session) {
+		String userToken = headers.getFirst("authorization");
+		LOGGER.info(userToken);
+
 		User dbUser = userService.getUser(user);
 		if (dbUser != null) {
 			session.setAttribute(Session.CURRENT_USER_ID, dbUser.getId());
 			LOGGER.info("User " + dbUser.getName() + " logged in");
+			userService.setToken(dbUser);
 			return new ResponseEntity<>(dbUser, HttpStatus.OK);
 		}
 		LOGGER.error(Message.NON_EXISTENT_USER);
