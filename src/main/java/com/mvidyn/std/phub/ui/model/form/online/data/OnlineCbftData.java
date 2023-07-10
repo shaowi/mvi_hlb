@@ -10,6 +10,9 @@ import lombok.Getter;
 @Table(name = "online_cbft_transaction")
 public class OnlineCbftData extends OnlineData {
 
+	private String filename;
+	private String debitType;
+
 	// Payment details
 	private long foreignPaymentFormId;
 
@@ -25,21 +28,26 @@ public class OnlineCbftData extends OnlineData {
 	private double netRemittance;
 
 	@Builder
-	public OnlineCbftData(long id, String transactionType, String requestChannel, String transactionDate,
+	public OnlineCbftData(long id, String transactionType, String requestChannel,
+			String transactionDate,
 			String valueDate,
 			String businessDate, long applicantId, long beneficiaryId, String sendersCorrespondent,
 			String receiversCorrespondent, String channelTransactionRef, String recipientRef, String purposeOfPayment,
 			String remittanceInfo, String addRemittanceInfo, String senderToReceiverInfo,
 			String addSenderToReceiverInfo, String otherPaymentDetails, String requesterComments,
-			long foreignPaymentFormId, double creditMidRate, double debitMidRate, String chargeBearer,
+			long foreignPaymentFormId, String filename, String debitType, double creditMidRate, double debitMidRate,
+			String chargeBearer,
 			double commissionExchange, double commissionHandle, double cableCharge, double totalFee, double netPayment,
 			double netRemittance) {
-		super(applicantId, beneficiaryId, id, transactionType, requestChannel, transactionDate, valueDate, businessDate,
+		super(applicantId, beneficiaryId, id, transactionType, requestChannel, transactionDate, valueDate,
+				businessDate,
 				sendersCorrespondent,
 				receiversCorrespondent, channelTransactionRef, recipientRef, purposeOfPayment, remittanceInfo,
 				addRemittanceInfo, senderToReceiverInfo, addSenderToReceiverInfo, otherPaymentDetails,
 				requesterComments);
 		this.foreignPaymentFormId = foreignPaymentFormId;
+		this.filename = filename;
+		this.debitType = debitType;
 		this.creditMidRate = creditMidRate;
 		this.debitMidRate = debitMidRate;
 		this.chargeBearer = chargeBearer;

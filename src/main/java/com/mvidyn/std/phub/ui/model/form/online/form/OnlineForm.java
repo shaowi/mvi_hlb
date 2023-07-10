@@ -19,7 +19,8 @@ public abstract class OnlineForm extends OnlineBase {
 			String receiversCorrespondent, String channelTransactionRef, String recipientRef, String purposeOfPayment,
 			String remittanceInfo, String addRemittanceInfo, String senderToReceiverInfo,
 			String addSenderToReceiverInfo, String otherPaymentDetails, String requesterComments) {
-		super(id, transactionType, requestChannel, transactionDate, valueDate, businessDate, sendersCorrespondent,
+		super(id, transactionType, requestChannel, transactionDate, valueDate, businessDate,
+				sendersCorrespondent,
 				receiversCorrespondent, channelTransactionRef, recipientRef, purposeOfPayment, remittanceInfo,
 				addRemittanceInfo, senderToReceiverInfo, addSenderToReceiverInfo, otherPaymentDetails,
 				requesterComments);

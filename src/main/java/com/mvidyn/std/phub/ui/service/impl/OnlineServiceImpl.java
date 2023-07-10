@@ -1,6 +1,7 @@
 package com.mvidyn.std.phub.ui.service.impl;
 
 import java.util.Arrays;
+import java.util.List;
 
 import com.mvidyn.std.phub.ui.exception.Message;
 import com.mvidyn.std.phub.ui.model.Applicant;
@@ -39,6 +40,11 @@ public class OnlineServiceImpl implements OnlineService {
 		saveTransactorsIfNotExists(form.getApplicant(), form.getBeneficiary());
 		savePayment(form.getForeignPaymentForm());
 		return onlineCbftRepository.save(OnlineCbftForm.buildData(form));
+	}
+
+	@Override
+	public List<OnlineCbftData> getCbftTransactions(String filename) {
+		return onlineCbftRepository.findByFilename(filename);
 	}
 
 	private void savePayment(PaymentForm paymentForm) {

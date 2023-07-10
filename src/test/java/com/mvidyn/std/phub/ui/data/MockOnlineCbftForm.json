@@ -1,5 +1,5 @@
 {
-  "id": 0,
+  "filename": "filename",
   "transactionDate": "2020-01-01",
   "transactionType": "CBFT",
   "requestChannel": "WEB",
@@ -30,7 +30,6 @@
     "isResident": true,
     "bankBic": "bankBic",
     "addresses": "addresses",
-    "id": 0,
     "accountType": "accountType",
     "accountCurrency": "accountCurrency",
     "accountCifId": "accountCifId",
@@ -46,7 +45,6 @@
     "isResident": true,
     "bankBic": "bankBic",
     "addresses": "addresses",
-    "id": 0,
     "bankAddresses": "bankAddresses"
   },
   "foreignPaymentForm": {
@@ -55,7 +53,6 @@
     "paymentCurrency": "paymentCurrency",
     "paymentAmount": 0,
     "localEquivalentAmount": 0,
-    "id": 0,
     "fxRefNumber": "fxRefNumber",
     "exchangeRate": 0,
     "creditFxRate": 0,

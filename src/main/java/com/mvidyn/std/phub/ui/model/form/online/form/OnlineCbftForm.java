@@ -12,6 +12,9 @@ import lombok.Setter;
 @Setter
 public class OnlineCbftForm extends OnlineForm implements Cloneable {
 
+	private String filename;
+	private String debitType;
+
 	// Payment details
 	private ForeignPaymentForm foreignPaymentForm;
 
@@ -27,20 +30,25 @@ public class OnlineCbftForm extends OnlineForm implements Cloneable {
 	private double netRemittance;
 
 	@Builder
-	public OnlineCbftForm(long id, String transactionType, String requestChannel, String transactionDate,
+	public OnlineCbftForm(long id, String transactionType, String requestChannel,
+			String transactionDate,
 			String valueDate,
 			String businessDate, Applicant applicant, Beneficiary beneficiary, String sendersCorrespondent,
 			String receiversCorrespondent, String channelTransactionRef, String recipientRef, String purposeOfPayment,
 			String remittanceInfo, String addRemittanceInfo, String senderToReceiverInfo,
 			String addSenderToReceiverInfo, String otherPaymentDetails, String requesterComments,
-			ForeignPaymentForm foreignPaymentForm, double creditMidRate, double debitMidRate, String chargeBearer,
+			ForeignPaymentForm foreignPaymentForm, String filename, String debitType, double creditMidRate,
+			double debitMidRate, String chargeBearer,
 			double commissionExchange, double commissionHandle, double cableCharge, double totalFee, double netPayment,
 			double netRemittance) {
-		super(applicant, beneficiary, id, transactionType, requestChannel, transactionDate, valueDate, businessDate,
+		super(applicant, beneficiary, id, transactionType, requestChannel, transactionDate, valueDate,
+				businessDate,
 				sendersCorrespondent, receiversCorrespondent, channelTransactionRef, recipientRef, purposeOfPayment,
 				remittanceInfo, addRemittanceInfo, senderToReceiverInfo, addSenderToReceiverInfo, otherPaymentDetails,
 				requesterComments);
 		this.foreignPaymentForm = foreignPaymentForm;
+		this.filename = filename;
+		this.debitType = debitType;
 		this.creditMidRate = creditMidRate;
 		this.debitMidRate = debitMidRate;
 		this.chargeBearer = chargeBearer;
@@ -73,6 +81,8 @@ public class OnlineCbftForm extends OnlineForm implements Cloneable {
 				.otherPaymentDetails(form.getOtherPaymentDetails())
 				.requesterComments(form.getRequesterComments())
 				.foreignPaymentFormId(form.getForeignPaymentForm().getId())
+				.filename(form.getFilename())
+				.debitType(form.getDebitType())
 				.creditMidRate(form.getCreditMidRate())
 				.debitMidRate(form.getDebitMidRate())
 				.chargeBearer(form.getChargeBearer())
