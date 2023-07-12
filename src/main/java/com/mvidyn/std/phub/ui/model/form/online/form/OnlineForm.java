@@ -13,17 +13,21 @@ public abstract class OnlineForm extends OnlineBase {
 	private Applicant applicant;
 	private Beneficiary beneficiary;
 
-	public OnlineForm(Applicant applicant, Beneficiary beneficiary, long id, String transactionType,
+	public OnlineForm(Applicant applicant, Beneficiary beneficiary, long id, String processingMode,
+			String transactionType,
 			String requestChannel, String transactionDate, String valueDate,
 			String businessDate, String sendersCorrespondent,
-			String receiversCorrespondent, String channelTransactionRef, String recipientRef, String purposeOfPayment,
-			String remittanceInfo, String addRemittanceInfo, String senderToReceiverInfo,
-			String addSenderToReceiverInfo, String otherPaymentDetails, String requesterComments) {
-		super(id, transactionType, requestChannel, transactionDate, valueDate, businessDate,
+			String receiversCorrespondent, String channelTransactionReference, String recipientReference,
+			String purposeOfPayment,
+			String remittanceInfo, String additionalRemittanceInfo, String senderToReceiverInfo,
+			String additionalSenderToReceiverInfo, String otherPaymentDetails, String requesterComments,
+			String status) {
+		super(id, processingMode, transactionType, requestChannel, transactionDate, valueDate, businessDate,
 				sendersCorrespondent,
-				receiversCorrespondent, channelTransactionRef, recipientRef, purposeOfPayment, remittanceInfo,
-				addRemittanceInfo, senderToReceiverInfo, addSenderToReceiverInfo, otherPaymentDetails,
-				requesterComments);
+				receiversCorrespondent, channelTransactionReference, recipientReference, purposeOfPayment,
+				remittanceInfo,
+				additionalRemittanceInfo, senderToReceiverInfo, additionalSenderToReceiverInfo, otherPaymentDetails,
+				requesterComments, status);
 		this.applicant = applicant;
 		this.beneficiary = beneficiary;
 	}

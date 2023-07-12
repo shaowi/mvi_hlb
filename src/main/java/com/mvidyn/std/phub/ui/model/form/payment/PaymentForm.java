@@ -8,9 +8,11 @@ import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Getter
 @Entity
+@NoArgsConstructor
 @AllArgsConstructor
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 public abstract class PaymentForm {

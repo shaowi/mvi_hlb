@@ -2,6 +2,7 @@ package com.mvidyn.std.phub.ui.service.impl;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import com.mvidyn.std.phub.ui.exception.Message;
 import com.mvidyn.std.phub.ui.model.Applicant;
@@ -43,8 +44,23 @@ public class OnlineServiceImpl implements OnlineService {
 	}
 
 	@Override
-	public List<OnlineCbftData> getCbftTransactions(String filename) {
-		return onlineCbftRepository.findByFilename(filename);
+	public List<OnlineCbftForm> getCbftTransactionsByFilename(String filename) {
+		List<OnlineCbftData> transactionDataList = onlineCbftRepository.findByFilename(filename);
+		return transactionDataList.stream().map(this::mapToForm).collect(Collectors.toList());
+	}
+
+	@Override
+	public List<OnlineCbftForm> getCbftTransactions() {
+		List<OnlineCbftData> transactionDataList = onlineCbftRepository.findAll();
+		return transactionDataList.stream().map(this::mapToForm).collect(Collectors.toList());
+	}
+
+	private OnlineCbftForm mapToForm(OnlineCbftData data) {
+		Applicant applicant = applicantRepository.findById(data.getApplicantId()).get();
+		Beneficiary beneficiary = beneficiaryRepository.findById(data.getBeneficiaryId()).get();
+		ForeignPaymentForm foreignPaymentForm = foreignPaymentRepository.findById(data.getForeignPaymentFormId())
+				.get();
+		return OnlineCbftData.buildForm(applicant, beneficiary, foreignPaymentForm, data);
 	}
 
 	private void savePayment(PaymentForm paymentForm) {

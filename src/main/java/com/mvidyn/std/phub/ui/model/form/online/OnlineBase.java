@@ -8,9 +8,11 @@ import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Getter
 @Entity
+@NoArgsConstructor
 @AllArgsConstructor
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 public abstract class OnlineBase {
@@ -19,6 +21,7 @@ public abstract class OnlineBase {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long id;
 
+	private String processingMode;
 	private String transactionType;
 	private String requestChannel;
 	private String transactionDate;
@@ -30,14 +33,15 @@ public abstract class OnlineBase {
 	private String receiversCorrespondent;
 
 	// Transaction Details
-	private String channelTransactionRef;
-	private String recipientRef;
+	private String channelTransactionReference;
+	private String recipientReference;
 	private String purposeOfPayment;
 	private String remittanceInfo;
-	private String addRemittanceInfo;
+	private String additionalRemittanceInfo;
 	private String senderToReceiverInfo;
-	private String addSenderToReceiverInfo;
+	private String additionalSenderToReceiverInfo;
 	private String otherPaymentDetails;
 
 	private String requesterComments;
+	private String status;
 }

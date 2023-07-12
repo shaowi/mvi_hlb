@@ -2,6 +2,7 @@ package com.mvidyn.std.phub.ui.controller;
 
 import java.util.List;
 
+import com.mvidyn.std.phub.ui.exception.Message;
 import com.mvidyn.std.phub.ui.model.form.online.data.OnlineCbftData;
 import com.mvidyn.std.phub.ui.model.form.online.form.OnlineCbftForm;
 import com.mvidyn.std.phub.ui.service.OnlineService;
@@ -40,15 +41,31 @@ public class OnlineController {
 		}
 	}
 
-	@GetMapping("/cbft")
-	public ResponseEntity<List<OnlineCbftData>> getCbftTransaction(@RequestParam String filename, HttpSession session) {
+	@GetMapping("/cbft/all")
+	public ResponseEntity<List<OnlineCbftForm>> getCbftTransactions(
+			HttpSession session) {
 		try {
-			LOGGER.error("User " + session.getAttribute("user") + " retrieved a cbft transaction");
-			return new ResponseEntity<>(onlineService.getCbftTransactions(filename), HttpStatus.OK);
+			LOGGER.info("User " + session.getAttribute("user") + " retrieved all cbft transactions");
+			return new ResponseEntity<>(onlineService.getCbftTransactions(),
+					HttpStatus.OK);
 		} catch (IllegalArgumentException e) {
 			LOGGER.error(e.getMessage());
 			return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
 		}
 	}
 
+	@GetMapping("/cbft")
+	public ResponseEntity<List<OnlineCbftForm>> getCbftTransactions(@RequestParam String filename,
+			HttpSession session) {
+		try {
+			LOGGER.info("User " + session.getAttribute("user") + " retrieved cbft transactions");
+			if (filename.isEmpty()) {
+				throw new IllegalArgumentException(Message.INVALID_FILENAME);
+			}
+			return new ResponseEntity<>(onlineService.getCbftTransactionsByFilename(filename), HttpStatus.OK);
+		} catch (IllegalArgumentException e) {
+			LOGGER.error(e.getMessage());
+			return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+		}
+	}
 }
