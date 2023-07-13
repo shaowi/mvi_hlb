@@ -72,6 +72,7 @@ public class OnlineCbftData extends OnlineData {
 	public static OnlineCbftForm buildForm(Applicant applicant, Beneficiary beneficiary,
 			ForeignPaymentForm foreignPaymentForm, OnlineCbftData data) {
 		return OnlineCbftForm.builder()
+				.id(data.getId())
 				.processingMode(data.getProcessingMode())
 				.transactionType(data.getTransactionType())
 				.requestChannel(data.getRequestChannel())

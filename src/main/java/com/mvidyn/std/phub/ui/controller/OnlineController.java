@@ -41,6 +41,18 @@ public class OnlineController {
 		}
 	}
 
+	@PostMapping("/cbft/update")
+	public ResponseEntity<OnlineCbftData> updateCbftTransaction(@RequestBody OnlineCbftForm form, HttpSession session) {
+		try {
+			LOGGER.error(
+					"User " + session.getAttribute("user") + " updating a cbft transaction of id: " + form.getId());
+			return new ResponseEntity<>(onlineService.updateCbftTransaction(form), HttpStatus.OK);
+		} catch (IllegalArgumentException e) {
+			LOGGER.error(e.getMessage());
+			return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+		}
+	}
+
 	@GetMapping("/cbft/all")
 	public ResponseEntity<List<OnlineCbftForm>> getCbftTransactions(
 			HttpSession session) {

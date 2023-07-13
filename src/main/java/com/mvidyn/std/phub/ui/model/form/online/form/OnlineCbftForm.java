@@ -66,6 +66,7 @@ public class OnlineCbftForm extends OnlineForm implements Cloneable {
 
 	public static OnlineCbftData buildData(OnlineCbftForm form) {
 		return OnlineCbftData.builder()
+				.id(form.getId())
 				.processingMode(form.getProcessingMode())
 				.transactionType(form.getTransactionType())
 				.requestChannel(form.getRequestChannel())

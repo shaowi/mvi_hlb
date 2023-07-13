@@ -55,6 +55,14 @@ public class OnlineServiceImpl implements OnlineService {
 		return transactionDataList.stream().map(this::mapToForm).collect(Collectors.toList());
 	}
 
+	@Override
+	public OnlineCbftData updateCbftTransaction(OnlineCbftForm form) {
+		checkFormValidity(form);
+		updateTransactors(form.getApplicant(), form.getBeneficiary());
+		updatePayment(form.getForeignPaymentForm());
+		return onlineCbftRepository.save(OnlineCbftForm.buildData(form));
+	}
+
 	private OnlineCbftForm mapToForm(OnlineCbftData data) {
 		Applicant applicant = applicantRepository.findById(data.getApplicantId()).get();
 		Beneficiary beneficiary = beneficiaryRepository.findById(data.getBeneficiaryId()).get();
@@ -71,6 +79,10 @@ public class OnlineServiceImpl implements OnlineService {
 			ForeignPaymentForm foreignPaymentForm = (ForeignPaymentForm) paymentForm;
 			foreignPaymentRepository.save(foreignPaymentForm);
 		}
+	}
+
+	private void updatePayment(ForeignPaymentForm foreignPaymentForm) {
+		foreignPaymentRepository.save(foreignPaymentForm);
 	}
 
 	private void saveTransactorsIfNotExists(Transactor... transactors) {
@@ -92,6 +104,11 @@ public class OnlineServiceImpl implements OnlineService {
 				}
 			}
 		}
+	}
+
+	private void updateTransactors(Applicant applicant, Beneficiary beneficiary) {
+		applicantRepository.save(applicant);
+		beneficiaryRepository.save(beneficiary);
 	}
 
 	private void checkFormValidity(OnlineCbftForm form) {

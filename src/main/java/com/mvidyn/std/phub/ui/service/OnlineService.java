@@ -8,6 +8,8 @@ import com.mvidyn.std.phub.ui.model.form.online.form.OnlineCbftForm;
 public interface OnlineService {
 	public OnlineCbftData createCbftTransaction(OnlineCbftForm form);
 
+	public OnlineCbftData updateCbftTransaction(OnlineCbftForm form);
+
 	public List<OnlineCbftForm> getCbftTransactionsByFilename(String filename);
 
 	public List<OnlineCbftForm> getCbftTransactions();
