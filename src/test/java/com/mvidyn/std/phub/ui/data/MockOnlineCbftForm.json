@@ -56,10 +56,10 @@
   },
   "foreignPaymentForm": {
     "remittanceCurrency": "SGD",
-    "remittanceAmount": 0,
+    "remittanceAmount": 200,
     "paymentCurrency": "SGD",
-    "paymentAmount": 200,
-    "localEquivalentAmount": 200,
+    "paymentAmount": 300,
+    "localEquivalentAmount": 300,
     "fxContractReferenceNo": "fxContractReferenceNo",
     "exchangeRate": 0,
     "creditFxRate": 0,
