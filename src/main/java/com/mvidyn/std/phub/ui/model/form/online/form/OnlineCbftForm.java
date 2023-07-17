@@ -37,7 +37,8 @@ public class OnlineCbftForm extends OnlineForm implements Cloneable {
 			String receiversCorrespondent, String channelTransactionReference, String recipientReference,
 			String purposeOfPayment,
 			String remittanceInfo, String additionalRemittanceInfo, String senderToReceiverInfo,
-			String additionalSenderToReceiverInfo, String otherPaymentDetails, String requesterComments, String status,
+			String additionalSenderToReceiverInfo, String otherPaymentDetails, String reviewerComments,
+			String requesterComments, String status,
 			ForeignPaymentForm foreignPaymentForm, String filename, String debitType, double creditMidRate,
 			double debitMidRate, String chargeBearer,
 			double commissionInLieuOfExchange, double commissionHandle, double cableCharge, double totalFee,
@@ -48,7 +49,7 @@ public class OnlineCbftForm extends OnlineForm implements Cloneable {
 				sendersCorrespondent, receiversCorrespondent, channelTransactionReference, recipientReference,
 				purposeOfPayment,
 				remittanceInfo, additionalRemittanceInfo, senderToReceiverInfo, additionalSenderToReceiverInfo,
-				otherPaymentDetails,
+				otherPaymentDetails, reviewerComments,
 				requesterComments, status);
 		this.foreignPaymentForm = foreignPaymentForm;
 		this.filename = filename;
@@ -85,6 +86,7 @@ public class OnlineCbftForm extends OnlineForm implements Cloneable {
 				.senderToReceiverInfo(form.getSenderToReceiverInfo())
 				.additionalSenderToReceiverInfo(form.getAdditionalSenderToReceiverInfo())
 				.otherPaymentDetails(form.getOtherPaymentDetails())
+				.reviewerComments(form.getReviewerComments())
 				.requesterComments(form.getRequesterComments())
 				.status(form.getStatus())
 				.foreignPaymentFormId(form.getForeignPaymentForm().getId())

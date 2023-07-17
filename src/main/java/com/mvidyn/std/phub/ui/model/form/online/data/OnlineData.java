@@ -21,11 +21,12 @@ public abstract class OnlineData extends OnlineBase {
 			String transactionDate, String valueDate, String businessDate, String sendersCorrespondent,
 			String receiversCorrespondent, String channelTransactionRef, String recipientRef, String purposeOfPayment,
 			String remittanceInfo, String addRemittanceInfo, String senderToReceiverInfo,
-			String addSenderToReceiverInfo, String otherPaymentDetails, String requesterComments, String status) {
+			String addSenderToReceiverInfo, String otherPaymentDetails, String reviewerComments,
+			String requesterComments, String status) {
 		super(id, processingMode, transactionType, requestChannel, transactionDate, valueDate, businessDate,
 				sendersCorrespondent,
 				receiversCorrespondent, channelTransactionRef, recipientRef, purposeOfPayment, remittanceInfo,
-				addRemittanceInfo, senderToReceiverInfo, addSenderToReceiverInfo, otherPaymentDetails,
+				addRemittanceInfo, senderToReceiverInfo, addSenderToReceiverInfo, otherPaymentDetails, reviewerComments,
 				requesterComments, status);
 		this.applicantId = applicantId;
 		this.beneficiaryId = beneficiaryId;

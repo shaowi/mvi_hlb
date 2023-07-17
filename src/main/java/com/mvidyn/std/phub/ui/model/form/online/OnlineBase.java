@@ -42,6 +42,7 @@ public abstract class OnlineBase {
 	private String additionalSenderToReceiverInfo;
 	private String otherPaymentDetails;
 
+	private String reviewerComments;
 	private String requesterComments;
 	private String status;
 }

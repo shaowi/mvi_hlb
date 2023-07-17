@@ -41,7 +41,8 @@ public class OnlineCbftData extends OnlineData {
 			String receiversCorrespondent, String channelTransactionReference, String recipientReference,
 			String purposeOfPayment,
 			String remittanceInfo, String additionalRemittanceInfo, String senderToReceiverInfo,
-			String additionalSenderToReceiverInfo, String otherPaymentDetails, String requesterComments, String status,
+			String additionalSenderToReceiverInfo, String otherPaymentDetails, String reviewerComments,
+			String requesterComments, String status,
 			long foreignPaymentFormId, String filename, String debitType, double creditMidRate, double debitMidRate,
 			String chargeBearer,
 			double commissionInLieuOfExchange, double commissionHandle, double cableCharge, double totalFee,
@@ -54,6 +55,7 @@ public class OnlineCbftData extends OnlineData {
 				receiversCorrespondent, channelTransactionReference, recipientReference, purposeOfPayment,
 				remittanceInfo,
 				additionalRemittanceInfo, senderToReceiverInfo, additionalSenderToReceiverInfo, otherPaymentDetails,
+				reviewerComments,
 				requesterComments, status);
 		this.foreignPaymentFormId = foreignPaymentFormId;
 		this.filename = filename;
@@ -91,6 +93,7 @@ public class OnlineCbftData extends OnlineData {
 				.senderToReceiverInfo(data.getSenderToReceiverInfo())
 				.additionalSenderToReceiverInfo(data.getAdditionalSenderToReceiverInfo())
 				.otherPaymentDetails(data.getOtherPaymentDetails())
+				.reviewerComments(data.getReviewerComments())
 				.requesterComments(data.getRequesterComments())
 				.status(data.getStatus())
 				.foreignPaymentForm(foreignPaymentForm)
