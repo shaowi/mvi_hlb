@@ -51,49 +51,50 @@ public class OnlineServiceTests {
 	}
 
 	@Test
-	public void createCbftTransaction_DoesNotThrowIllegalArgException() {
+	public void createOrUpdateCbftTransaction_DoesNotThrowIllegalArgException() {
 		// Arrange
 		when(onlineRepository.save(data)).thenReturn(data);
 
 		// Act & Assert
-		assertDoesNotThrow(() -> onlineService.createCbftTransaction(form), "Form is null");
+		assertDoesNotThrow(() -> onlineService.saveCbftTransaction(form), "Form is null");
 	}
 
 	@Test
-	public void createCbftTransaction_InvalidForm_ThrowIllegalArgException() {
-		assertThrows(IllegalArgumentException.class, () -> onlineService.createCbftTransaction(null));
+	public void createOrUpdateCbftTransaction_InvalidForm_ThrowIllegalArgException() {
+		assertThrows(IllegalArgumentException.class, () -> onlineService.saveCbftTransaction(null));
 	}
 
 	@Test
-	public void createCbftTransaction_InvalidFormPayment_ThrowIllegalArgException() {
+	public void createOrUpdateCbftTransaction_InvalidFormPayment_ThrowIllegalArgException() {
 		try {
 			OnlineCbftForm badForm = form.clone();
 			badForm.setForeignPaymentForm(null);
-			assertThrows(IllegalArgumentException.class, () -> onlineService.createCbftTransaction(badForm));
+			assertThrows(IllegalArgumentException.class, () -> onlineService.saveCbftTransaction(badForm));
 		} catch (CloneNotSupportedException e) {
 			e.printStackTrace();
 		}
 	}
 
 	@Test
-	public void createCbftTransaction_InvalidFormApplicant_ThrowIllegalArgException() {
+	public void createOrUpdateCbftTransaction_InvalidFormApplicant_ThrowIllegalArgException() {
 		try {
 			OnlineCbftForm badForm = form.clone();
 			badForm.setApplicant(null);
-			assertThrows(IllegalArgumentException.class, () -> onlineService.createCbftTransaction(badForm));
+			assertThrows(IllegalArgumentException.class, () -> onlineService.saveCbftTransaction(badForm));
 		} catch (CloneNotSupportedException e) {
 			e.printStackTrace();
 		}
 	}
 
 	@Test
-	public void createCbftTransaction_InvalidFormBeneficiary_ThrowIllegalArgException() {
+	public void createOrUpdateCbftTransaction_InvalidFormBeneficiary_ThrowIllegalArgException() {
 		try {
 			OnlineCbftForm badForm = form.clone();
 			badForm.setBeneficiary(null);
-			assertThrows(IllegalArgumentException.class, () -> onlineService.createCbftTransaction(badForm));
+			assertThrows(IllegalArgumentException.class, () -> onlineService.saveCbftTransaction(badForm));
 		} catch (CloneNotSupportedException e) {
 			e.printStackTrace();
 		}
 	}
+
 }

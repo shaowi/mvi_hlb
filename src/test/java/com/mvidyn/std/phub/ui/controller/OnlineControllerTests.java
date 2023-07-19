@@ -3,6 +3,8 @@ package com.mvidyn.std.phub.ui.controller;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.Mockito.when;
 
+import java.util.List;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mvidyn.std.phub.ui.data.MockData;
 import com.mvidyn.std.phub.ui.exception.Message;
@@ -62,7 +64,7 @@ public class OnlineControllerTests {
 	public void createCbftTransaction_ReturnCreated() throws Exception {
 		// Arrange
 		String endpoint = BASE + "/cbft/create";
-		when(onlineService.createCbftTransaction(form)).thenReturn(data);
+		when(onlineService.saveCbftTransaction(form)).thenReturn(data);
 
 		// Act
 		ResultActions response = mockMvc.perform(MockMvcRequestBuilders.post(endpoint)
@@ -77,13 +79,88 @@ public class OnlineControllerTests {
 	public void createCbftTransaction_ReturnBadRequest() throws Exception {
 		// Arrange
 		String endpoint = BASE + "/cbft/create";
-		when(onlineService.createCbftTransaction(null))
+		when(onlineService.saveCbftTransaction(null))
 				.thenThrow(new IllegalArgumentException(Message.INVALID_FORM));
 
 		// Act
 		ResultActions response = mockMvc.perform(MockMvcRequestBuilders.post(endpoint)
 				.contentType(MediaType.APPLICATION_JSON)
 				.content(objectMapper.writeValueAsString(null)));
+
+		// Assert
+		response.andExpect(MockMvcResultMatchers.status().isBadRequest());
+	}
+
+	@Test
+	public void updateCbftTransaction_ReturnOk() throws Exception {
+		// Arrange
+		String endpoint = BASE + "/cbft/update";
+		when(onlineService.saveCbftTransaction(form)).thenReturn(data);
+
+		// Act
+		ResultActions response = mockMvc.perform(MockMvcRequestBuilders.post(endpoint)
+				.contentType(MediaType.APPLICATION_JSON)
+				.content(objectMapper.writeValueAsString(form)));
+
+		// Assert
+		response.andExpect(MockMvcResultMatchers.status().isOk());
+	}
+
+	@Test
+	public void updateCbftTransaction_ReturnBadRequest() throws Exception {
+		// Arrange
+		String endpoint = BASE + "/cbft/update";
+		when(onlineService.saveCbftTransaction(null))
+				.thenThrow(new IllegalArgumentException(Message.INVALID_FORM));
+
+		// Act
+		ResultActions response = mockMvc.perform(MockMvcRequestBuilders.post(endpoint)
+				.contentType(MediaType.APPLICATION_JSON)
+				.content(objectMapper.writeValueAsString(null)));
+
+		// Assert
+		response.andExpect(MockMvcResultMatchers.status().isBadRequest());
+	}
+
+	@Test
+	public void getCbftTransactions_ReturnOk() throws Exception {
+		// Arrange
+		String endpoint = BASE + "/cbft/all";
+		List<OnlineCbftForm> forms = List.of(form);
+		when(onlineService.getCbftTransactions()).thenReturn(forms);
+
+		// Act
+		ResultActions response = mockMvc.perform(MockMvcRequestBuilders.get(endpoint));
+
+		// Assert
+		response.andExpect(MockMvcResultMatchers.status().isOk());
+	}
+
+	@Test
+	public void getCbftTransactionsByFilename_ReturnOk() throws Exception {
+		// Arrange
+		String endpoint = BASE + "/cbft";
+		List<OnlineCbftForm> forms = List.of(form);
+		when(onlineService.getCbftTransactionsByFilename("filename")).thenReturn(forms);
+
+		// Act
+		ResultActions response = mockMvc.perform(MockMvcRequestBuilders.get(endpoint)
+				.param("filename", "filename"));
+
+		// Assert
+		response.andExpect(MockMvcResultMatchers.status().isOk());
+	}
+
+	@Test
+	public void getCbftTransactionsByFilename_ReturnBadRequest() throws Exception {
+		// Arrange
+		String endpoint = BASE + "/cbft";
+		when(onlineService.getCbftTransactionsByFilename(""))
+				.thenThrow(new IllegalArgumentException(Message.INVALID_FILENAME));
+
+		// Act
+		ResultActions response = mockMvc.perform(MockMvcRequestBuilders.get(endpoint)
+				.param("filename", ""));
 
 		// Assert
 		response.andExpect(MockMvcResultMatchers.status().isBadRequest());

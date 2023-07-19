@@ -36,9 +36,9 @@ public class OnlineServiceImpl implements OnlineService {
 	private ForeignPaymentRepository foreignPaymentRepository;
 
 	@Override
-	public OnlineCbftData createCbftTransaction(OnlineCbftForm form) {
+	public OnlineCbftData saveCbftTransaction(OnlineCbftForm form) {
 		checkFormValidity(form);
-		saveTransactorsIfNotExists(form.getApplicant(), form.getBeneficiary());
+		saveTransactors(form.getApplicant(), form.getBeneficiary());
 		savePayment(form.getForeignPaymentForm());
 		return onlineCbftRepository.save(OnlineCbftForm.buildData(form));
 	}
@@ -53,14 +53,6 @@ public class OnlineServiceImpl implements OnlineService {
 	public List<OnlineCbftForm> getCbftTransactions() {
 		List<OnlineCbftData> transactionDataList = onlineCbftRepository.findAll();
 		return transactionDataList.stream().map(this::mapToForm).collect(Collectors.toList());
-	}
-
-	@Override
-	public OnlineCbftData updateCbftTransaction(OnlineCbftForm form) {
-		checkFormValidity(form);
-		updateTransactors(form.getApplicant(), form.getBeneficiary());
-		updatePayment(form.getForeignPaymentForm());
-		return onlineCbftRepository.save(OnlineCbftForm.buildData(form));
 	}
 
 	private OnlineCbftForm mapToForm(OnlineCbftData data) {
@@ -81,34 +73,17 @@ public class OnlineServiceImpl implements OnlineService {
 		}
 	}
 
-	private void updatePayment(ForeignPaymentForm foreignPaymentForm) {
-		foreignPaymentRepository.save(foreignPaymentForm);
-	}
-
-	private void saveTransactorsIfNotExists(Transactor... transactors) {
+	private void saveTransactors(Transactor... transactors) {
 		if (hasInvalidTransactors(transactors)) {
 			throw new IllegalArgumentException(Message.INVALID_FORM_TRANSACTOR);
 		}
 		for (Transactor t : transactors) {
 			if (t instanceof Applicant) {
-				Applicant applicant = (Applicant) t;
-				boolean hasApplicant = applicantRepository.existsById(applicant.getId());
-				if (!hasApplicant) {
-					applicantRepository.save(applicant);
-				}
+				applicantRepository.save((Applicant) t);
 			} else if (t instanceof Beneficiary) {
-				Beneficiary beneficiary = (Beneficiary) t;
-				boolean hasBeneficiary = beneficiaryRepository.existsById(beneficiary.getId());
-				if (!hasBeneficiary) {
-					beneficiaryRepository.save(beneficiary);
-				}
+				beneficiaryRepository.save((Beneficiary) t);
 			}
 		}
-	}
-
-	private void updateTransactors(Applicant applicant, Beneficiary beneficiary) {
-		applicantRepository.save(applicant);
-		beneficiaryRepository.save(beneficiary);
 	}
 
 	private void checkFormValidity(OnlineCbftForm form) {

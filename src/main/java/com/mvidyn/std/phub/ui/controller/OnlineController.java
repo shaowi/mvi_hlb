@@ -34,7 +34,7 @@ public class OnlineController {
 	public ResponseEntity<OnlineCbftData> createCbftTransaction(@RequestBody OnlineCbftForm form, HttpSession session) {
 		try {
 			LOGGER.error("User " + session.getAttribute("user") + " created a new cbft transaction");
-			return new ResponseEntity<>(onlineService.createCbftTransaction(form), HttpStatus.CREATED);
+			return new ResponseEntity<>(onlineService.saveCbftTransaction(form), HttpStatus.CREATED);
 		} catch (IllegalArgumentException e) {
 			LOGGER.error(e.getMessage());
 			return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
@@ -46,7 +46,7 @@ public class OnlineController {
 		try {
 			LOGGER.error(
 					"User " + session.getAttribute("user") + " updating a cbft transaction of id: " + form.getId());
-			return new ResponseEntity<>(onlineService.updateCbftTransaction(form), HttpStatus.OK);
+			return new ResponseEntity<>(onlineService.saveCbftTransaction(form), HttpStatus.OK);
 		} catch (IllegalArgumentException e) {
 			LOGGER.error(e.getMessage());
 			return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
